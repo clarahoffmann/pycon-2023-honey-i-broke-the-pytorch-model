@@ -8,10 +8,16 @@ st.title("🔨 Breaking a model")
 st.sidebar.markdown("Breaking a model", unsafe_allow_html=True)
 
 
+image_directory = "pages/images/pipeline_components.png"
+image = Image.open(image_directory)
+st.image(image, caption='PyTorch model components')
+
+
 image_directory = "pages/images/building_blocks.png"
 image = Image.open(image_directory)
+st.image(image, caption='In-detail look')
 
-st.image(image, caption='Building blocks of a PyTorch model')
+
 
 
 st.header('Identifying point of breakage in PyTorch models')
