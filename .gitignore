@@ -1,0 +1,20 @@
+# Ignore logs
+logs
+**/logs
+**/logs_model
+c
+
+# Ignore Mac system files
+.DS_store
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*/__pycache__
+*.py[cod]
+
+# Ignore checkpoints, some logger outputs
+**/.ckpt
+**/hparams.yml
+
+# coverage reports
+.cache
