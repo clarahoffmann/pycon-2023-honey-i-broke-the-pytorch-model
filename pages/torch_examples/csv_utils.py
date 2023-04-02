@@ -15,7 +15,7 @@ def format_csv(csv_path: str, metric_list: list[str], output_path: Path) -> None
         if metric == 'train_loss':
             epochs = metrics_df[~metrics_df['train_loss'].isnull()]["epoch"][::3]
             train_loss = metrics_df[~metrics_df['train_loss'].isnull()]['train_loss'][::3]
-            df = pd.DataFrame({'epoch': epochs, 'metric': train_loss, 'label': 'train'})
+            df = pd.DataFrame({'epoch': epochs, 'metric': train_loss, 'label': 'train_loss'})
             df_list.append(df)
         else:
             epochs_metric = metrics_df[~metrics_df['val_loss'].isnull()]["epoch"]

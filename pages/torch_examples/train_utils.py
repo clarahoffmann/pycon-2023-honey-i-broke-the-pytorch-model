@@ -98,10 +98,12 @@ class Linear_Encoder(nn.Module):
     def __init__(self, input_dim: int, output_dim: int) -> None:
         """Setup model layers"""
         super().__init__()
+        super().__init__()
         self.output_dim = output_dim
         self.input_dim = input_dim
         self.layers = nn.Sequential(
-            nn.Linear(self.input_dim, 10), nn.Linear(10, self.output_dim)
+            nn.Linear(self.input_dim, 10),
+            nn.Linear(10, self.output_dim),
         )
 
     def forward(self, x: torch.Tensor) -> nn.Sequential:
