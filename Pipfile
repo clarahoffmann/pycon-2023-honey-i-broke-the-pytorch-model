@@ -4,12 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-streamlit = "*"
-matplotlib = "*"
-plotly = "*"
-streamlit-extras = "*"
 
 [dev-packages]
+ipykernel = "*"
 
 [requires]
-python_version = "3.11"
+python_version = "3.9"

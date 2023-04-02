@@ -1,11 +1,17 @@
 import streamlit as st
-from streamlit_extras.badges import badge
 from PIL import Image
+
+import jax
+import numpy as onp
+from jax import random
+from typing import Tuple
+import plotly.express as px
+
 
 
 st.title('🚢 Walkthrough example: Change Detection')
 
-st.header('Use Case: Identify changes in harbor')
+st.header('Use Case: Identify changes in harbors')
 
 harbor_dir = "pages/images/ship_time_series.png"
 harbor_img = Image.open(harbor_dir)
@@ -19,7 +25,7 @@ st.write('How can we solve this problem?')
 
 expensive_pipeline_dir = "pages/images/expensive_pipeline.png"
 exp_pipeline_img = Image.open(expensive_pipeline_dir)
-st.image(exp_pipeline_img, caption='How not to create your data')
+st.image(exp_pipeline_img, caption='How not to create your data', width=600)
 
 # probable result: very happy prompt engineer, happy cv engineers, but result
 # is more a pretrained model that was quite expensive - not our actual goal
@@ -27,7 +33,7 @@ st.image(exp_pipeline_img, caption='How not to create your data')
 # What about the case in which our data is already avaiable in one or two weeks?
 # we will definitely not have time to execute all above steps
 
-# maritime traffic expert performs QA, buy software fo  r simulating ship trajectories
+# maritime traffic expert performs QA, buy software for simulating ship trajectories
 
 st.write('Does it really have to be that complicated...?')
 
@@ -50,9 +56,5 @@ st.write('Obtain labels by simple mathematical operations')
 
 label_gen_dir = "pages/images/label_generation.png"
 label_gen_img = Image.open(label_gen_dir)
-st.image(label_gen_img, caption='Simple Ship Dataset')
-
-
-# afterward train a model with this
-
+st.image(label_gen_img, caption='Label generation', width=600)
 

@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "broke-pytorch"
+version = "0.1.0"
+description = ""
+authors = ["Clara Hoffmann"]
+readme = "README.md"
+packages = [{include = "broke_pytorch"}]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.9.7 || >3.9.7,<4.0"
+torch = "^2.0.0"
+jax = "^0.4.8"
+jaxlib = "^0.4.7"
+streamlit = "^1.20.0"
+plotly = "^5.14.0"
+matplotlib = "^3.7.1"
+pytorch-lightning = "^2.0.1"
+loguru = "^0.6.0"
+scikit-learn = "^1.2.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
