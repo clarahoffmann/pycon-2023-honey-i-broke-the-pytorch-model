@@ -36,6 +36,7 @@ def create_loaders(
     num_workers: int,
     shuffle_train: bool = True,
     shuffle_val: bool = False,
+    subset_broken_train: bool = False
 ) -> Tuple[DataLoader, DataLoader]:
     """
     Create dataloaders with desired train/validation split ratio
@@ -49,13 +50,16 @@ def create_loaders(
     train_set, val_set = torch.utils.data.random_split(
         data, [train_size, val_size]
     )
-
+    if subset_broken_train:
+        train_set = TensorDataset(train_set[0][0][0].repeat(train_size).reshape(-1,2), 
+                                  train_set[1][0][0].repeat(train_size).reshape(-1, 2))
+    
     train_loader = DataLoader(
-        train_set,
-        shuffle=shuffle_train,
-        batch_size=batch_size,
-        num_workers=num_workers,
-    )
+            train_set,
+            shuffle=shuffle_train,
+            batch_size=batch_size,
+            num_workers=num_workers,
+        )
     val_loader = DataLoader(
         val_set,
         shuffle=shuffle_val,

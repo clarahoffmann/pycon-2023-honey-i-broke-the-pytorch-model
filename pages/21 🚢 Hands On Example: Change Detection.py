@@ -11,6 +11,7 @@ import plotly.express as px
 
 st.title('🚢 Walkthrough example: Change Detection')
 
+
 st.header('Use Case: Identify changes in harbors')
 
 harbor_dir = "pages/images/ship_time_series.png"
