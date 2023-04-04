@@ -10,10 +10,14 @@ st.sidebar.markdown("Breaking a model", unsafe_allow_html=True)
 
 tab1, tab2, tab3 = st.tabs(["Model components", "In-depth look", "Breakage points"])
 with tab1: 
+        col1, col2 = st.columns([1,7])
+        with col1:
+            st.write(' ')
 
-        image_directory = "pages/images/pipeline_components.png"
-        image = Image.open(image_directory)
-        st.image(image, caption='PyTorch model components')
+        with col2:
+            image_directory = "pages/images/pipeline_components.png"
+            image = Image.open(image_directory)
+            st.image(image, caption='Typical PyTorch model components')
 
 with tab2:
         image_directory = "pages/images/building_blocks.png"
@@ -21,13 +25,13 @@ with tab2:
         st.image(image, caption='In-detail look')
 
 with tab3:
-    col1, col2, col3, col4, col5, col6, col7 = st.columns([1,1,1,1,1,1,1])
+    col1, col2= st.columns([2,4])
 
     m = st.markdown("""
     <style>
     div.stButton > button:first-child {
-        background-color: #F8F9F9;
-        color:#212F3C;
+        background-color: #dbf0db;
+        color:#003300;
     }
     div.stButton > button:hover {
         background-color: #FADBD8;
@@ -35,17 +39,12 @@ with tab3:
         }
     </style>""", unsafe_allow_html=True)
 
-    with col4:
-        st.button('🔞 NaN inputs')
-    with col5:
-        st.button('📉 Wrong sign loss function')
-    with col6:
-        st.button('🥣 Label mixup')
-
-
-    #x = [1,2,3,4,5,6,7,8,9,10]
-    #y = [1,2,3,4,5,6,7,8,9,10]
-    #df = pd.DataFrame({'epoch': x, 'loss': y, 'Accuracy': y , 'Precision': y, 'Recall': y, 'F1': y})
+    #with col4:
+        #st.button('🔞 NaN inputs')
+    #with col5:
+        #st.button('📉 Wrong sign loss function')
+    #with col6:
+        #st.button('🥣 Label mixup')
 
     df = pd.read_csv('pages/torch_examples/reformatted_metrics/circle_data.csv')
 
@@ -58,35 +57,44 @@ with tab3:
             )
 
     with col1:
-            if st.button('🧊 Freeze weights', key = 'freeze_weights'):
+        st.subheader('''Model structure''')
+        st.code('''self.layers = nn.Sequential(
+                nn.Linear(input_dim, 10), 
+                nn.ReLU(), 
+                nn.Linear(10, output_dim)
+        )''')
 
-                df_freeze_weights = pd.read_csv('pages/torch_examples/reformatted_metrics/circle_data_frozen.csv')
-                df_freeze_weights.loc[(df_freeze_weights.label == 'train_loss'),'label']='train loss (no relu)'
-                df_freeze_weights.loc[(df_freeze_weights.label == 'val_loss'),'label']='val loss (no relu)'
-                df = pd.concat([df, df_freeze_weights])
+        st.subheader('''Breakage options 🔨 ''')
 
-                fig_metrics = px.line(
-                    df,
-                    x='epoch',
-                    y='metric',
-                    color = 'label',
-                )
+        if st.button('🧊 Freeze weights', key = 'freeze_weights'):
 
-    with col2:
-            if st.button('🧊 Freeze bias', key = 'freeze_bias'):
-                df_freeze_bias = pd.read_csv('pages/torch_examples/reformatted_metrics/circle_data_frozen_bias.csv')
-                df_freeze_bias.loc[(df_freeze_bias.label == 'train_loss'),'label']='train loss (no relu)'
-                df_freeze_bias.loc[(df_freeze_bias.label == 'val_loss'),'label']='val loss (no relu)'
-                df = pd.concat([df, df_freeze_bias])
+            df_freeze_weights = pd.read_csv('pages/torch_examples/reformatted_metrics/circle_data_frozen.csv')
+            df_freeze_weights.loc[(df_freeze_weights.label == 'train_loss'),'label']='train loss (no relu)'
+            df_freeze_weights.loc[(df_freeze_weights.label == 'val_loss'),'label']='val loss (no relu)'
+            df = pd.concat([df, df_freeze_weights])
 
-                fig_metrics = px.line(
-                    df,
-                    x='epoch',
-                    y='metric',
-                    color = 'label',
-                )
-    
-    with col3:
+            fig_metrics = px.line(
+                df,
+                x='epoch',
+                y='metric',
+                color = 'label',
+            )
+
+        #with col2:
+        if st.button('🧊 Freeze bias', key = 'freeze_bias'):
+            df_freeze_bias = pd.read_csv('pages/torch_examples/reformatted_metrics/circle_data_frozen_bias.csv')
+            df_freeze_bias.loc[(df_freeze_bias.label == 'train_loss'),'label']='train loss (no relu)'
+            df_freeze_bias.loc[(df_freeze_bias.label == 'val_loss'),'label']='val loss (no relu)'
+            df = pd.concat([df, df_freeze_bias])
+
+            fig_metrics = px.line(
+                df,
+                x='epoch',
+                y='metric',
+                color = 'label',
+            )
+        
+        #with col3:
         if st.button('🔄 Always return same training example'):
             df_dataloader_broken = pd.read_csv('pages/torch_examples/reformatted_metrics/circle_dataloader_broken.csv')
             df_dataloader_broken.loc[(df_dataloader_broken.label == 'train_loss'),'label']='train loss (no relu)'
@@ -100,7 +108,7 @@ with tab3:
                 color = 'label',
             )
 
-    with col7:
+        #with col4:
         if st.button('📈 Break activations', key = 'no_relu'):
             df_no_relu = pd.read_csv('pages/torch_examples/reformatted_metrics/circle_data_no_relu.csv')
             df_no_relu.loc[(df_no_relu.label == 'train_loss'),'label']='train loss (no relu)'
@@ -121,48 +129,25 @@ with tab3:
                 color = 'label',
             )
 
-    tab1, tab2, tab3 = st.tabs(["Loss", "Metrics", "Weight Updates"])
-    with tab1:
-        st.write('''none''')
-        #st.plotly_chart(fig_loss, theme="streamlit", use_container_width=True)
-    with tab2:
-        st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)
         fig_metrics.update_coloraxes(showscale=False)
-    with tab3:
+        fig_metrics.update_yaxes(range = [0.3,0.8])
+
+    with col2: 
+        st.subheader('''Loss with different breakage''')
         st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)
+    
+
+    #tab1, tab2, tab3 = st.tabs(["Loss", "Metrics", "Weight Updates"])
+    #with tab1:
+    #    st.write('''none''')
+        #st.plotly_chart(fig_loss, theme="streamlit", use_container_width=True)
+    #with tab2:
+    #    st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)
+    #    fig_metrics.update_coloraxes(showscale=False)
+    #with tab3:
+    #    st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)
 
 
-options_break = st.multiselect(
-    'Choose one or more ways to break your model',
-    ['Freeze weights', 
-    'Freeze bias', 'Deliver training NaN data', 'Return same sample over and over again'])
-
-
-options_test = st.multiselect(
-    'Add one or more tests to your model',
-    ['Freeze weights', 
-    'Freeze bias', 'Deliver training NaN data', 'Return same sample over and over again'])
-
-if st.button('Retrain model'):
-    st.write('Why hello there')
-else:
-    st.write('Goodbye')
-
-
-if st.button('Evaluate failure'):
-    st.write('Why hello there')
-else:
-    st.write('Goodbye')
-
-
-with st.expander("Dataloader"):
-    st.markdown('<pre><code class="language-python"> import pandas as pd </code></pre>', unsafe_allow_html=True)
-
-with st.expander("Model"):
-    st.write('Goodbye')
-
-with st.expander("Backpropagation"):
-    st.write('Goodbye')
 
 
 

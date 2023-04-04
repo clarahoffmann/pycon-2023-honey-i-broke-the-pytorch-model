@@ -17,6 +17,7 @@ matplotlib = "^3.7.1"
 pytorch-lightning = "^2.0.1"
 loguru = "^0.6.0"
 scikit-learn = "^1.2.2"
+streamlit-extras = "^0.2.7"
 
 
 [build-system]
