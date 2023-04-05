@@ -1,4 +1,4 @@
-# Honey, I broke the PyTorch model
+# Honey, I broke the PyTorch model 🍯😊⛏️🐍🔥🧮
 ### PyCon.DE & PyData Berlin 2023
 
 ![alt text](pages/images/pycon_pydata_logo.png)
@@ -23,4 +23,6 @@ and run the presentation using
 streamlit run main.py
 ```
 
-The presentation should now be available in a new browser tab.
+The presentation should now be available in a new browser tab
+
+![alt text](pages/images/streamlit_frontpage.png)
