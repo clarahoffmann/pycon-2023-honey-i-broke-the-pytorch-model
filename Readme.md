@@ -1,5 +1,6 @@
-# Honey, I broke the PyTorch model 🍯😊⛏️🐍🔥🧮
-### PyCon.DE & PyData Berlin 2023
+# Honey, I broke the PyTorch model 
+# 🍯😊⛏️🐍🔥🧮
+### Talk at PyCon.DE & PyData Berlin 2023
 
 ![alt text](pages/images/pycon_pydata_logo.png)
 
@@ -12,12 +13,12 @@ This presentation covers strategies to
 To run the streamlit app, follow the steps below:
 ## 1. Set-up
 
-Activate the poetry environment via 
+Activate the poetry environment
 ```
 poetry shell
 ```
 
-and run the presentation using
+and run the presentation 
 
 ```
 streamlit run main.py
