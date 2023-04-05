@@ -1,5 +1,7 @@
 # Honey, I broke the PyTorch model
-### PyCon & PyData, Berlin 2023
+### PyCon.DE & PyData Berlin 2023
+
+![alt text](pages/images/pycon_pydata_logo.png)
 
 Are you ready to lift the veil from your broken PyTorch model and prevent it from
 ever breaking again?
