@@ -22,4 +22,4 @@ st.markdown("""
 st.markdown('<p class="big-font">🍯😊⛏️🐍🔥🧮</p>', unsafe_allow_html=True)
 
 st.markdown('<p class="big-font">Honey, I broke the PyTorch model</p>', unsafe_allow_html=True)
-st.markdown('<p class="medium-font">Clara Hoffmann - PyCon & PyData Berlin 2023</p>', unsafe_allow_html=True)
+st.markdown('<p class="medium-font">Clara Hoffmann - PyCon DE & PyData Berlin 2023</p>', unsafe_allow_html=True)
