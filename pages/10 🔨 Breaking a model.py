@@ -68,7 +68,7 @@ with tab3:
 
         if st.button('🧊 Freeze weights', key = 'freeze_weights'):
 
-            df_freeze_weights = pd.read_csv('pages/torch_examples/reformatted_metrics/circle_data_frozen.csv')
+            df_freeze_weights = pd.read_csv('pages/torch_examples/reformatted_metrics/circle_data_frozen_weights.csv')
             df_freeze_weights.loc[(df_freeze_weights.label == 'train_loss'),'label']='train loss (no relu)'
             df_freeze_weights.loc[(df_freeze_weights.label == 'val_loss'),'label']='val loss (no relu)'
             df = pd.concat([df, df_freeze_weights])

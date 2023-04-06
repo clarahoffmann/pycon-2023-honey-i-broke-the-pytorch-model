@@ -27,30 +27,70 @@ def generate_linear_dataloaders() -> Tuple[DataLoader]:
     data_linear = TensorDataset(
                     torch.Tensor(np.vstack((np.array(data)))), labels_one_hot
                 )
-    train_loader_linear, val_loader_linear = create_loaders(data = data_linear, ratio = 0.8, num_workers = 0, shuffle_train = True, shuffle_val = False, batch_size = 32)
+    train_loader_linear, val_loader_linear = create_loaders(data = data_linear, 
+                                                            ratio = 0.8, 
+                                                            num_workers = 0, 
+                                                            shuffle_train = True, 
+                                                            shuffle_val = False, 
+                                                            batch_size = 32)
 
     return train_loader_linear, val_loader_linear
 
-def generate_nonlinear_dataloaders() -> Tuple[DataLoader]:
+def generate_nonlinear_dataloaders(break_loader: bool = False) -> Tuple[DataLoader]:
     data_circles, label_circles = make_circles(n_samples=NUM_SAMPLES, factor=0.5, noise=0.05)
     # concentric circles
     data_tensor_circles = TensorDataset(
                     torch.Tensor(data_circles), F.one_hot(torch.Tensor(label_circles).to(torch.int64), num_classes=2).float() 
                 )
-    train_loader_circles, val_loader_circles = create_loaders(data = data_tensor_circles, ratio = 0.8,  batch_size = 32, num_workers = 0,
-                                                            shuffle_train = True, shuffle_val = False)
+    print(break_loader)
+    train_loader_circles, val_loader_circles = create_loaders(data = data_tensor_circles, 
+                                                              ratio = 0.8,  
+                                                              batch_size = 32, 
+                                                              num_workers = 0,
+                                                              shuffle_train = True, 
+                                                              shuffle_val = False, 
+                                                              subset_broken_train = break_loader)
 
     return train_loader_circles, val_loader_circles
 
 
-def train_model(train_loader: DataLoader, val_loader: DataLoader, save_dir_logger: str = 'metrics_csv', name_logger: str = 'linear', break_activations: bool = False, input_dim: int = 2, output_dim: int = 3) -> None:
+def train_model(train_loader: DataLoader, 
+                val_loader: DataLoader, 
+                save_dir_logger: str = 'metrics_csv', 
+                name_logger: str = 'linear', 
+                break_activations: str = False, 
+                freeze_weights: str = False, 
+                freeze_bias: str = False, 
+                input_dim: int = 2, 
+                output_dim: int = 3) -> None:
     
     logger.info('Define model and logger')
     if break_activations:
         logger.info('CAUTION: training with linear activation functions')
-        simple_dnn = SimpleDnn(Linear_Encoder(input_dim = input_dim, output_dim = output_dim), task_type = 'classification')
-    else:
+        simple_dnn = SimpleDnn(Linear_Encoder(input_dim = input_dim, 
+                                              output_dim = output_dim), 
+                               task_type = 'classification')
+    elif freeze_weights:
         simple_dnn = SimpleDnn(Encoder(input_dim = input_dim, output_dim = output_dim), task_type = 'classification')
+
+        num_params = len([param for param in simple_dnn.parameters()])
+        for i, param in zip(range(num_params), simple_dnn.parameters()):
+            if i in [num_params-1, num_params -2] :
+                param.requires_grad = False
+    
+    elif freeze_bias:
+        simple_dnn = SimpleDnn(Encoder(input_dim = input_dim, output_dim = output_dim), task_type = 'classification')
+
+        num_params = len([param for param in simple_dnn.parameters()])
+        for i, param in zip(range(num_params), simple_dnn.parameters()):
+            if i == num_params-1 :
+                param.requires_grad = False
+
+    else:
+        simple_dnn = SimpleDnn(Encoder(input_dim = input_dim, 
+                                       output_dim = output_dim), 
+                                task_type = 'classification')
+    
     csv_logger = CSVLogger(save_dir=save_dir_logger, name = name_logger)
 
     logger.info(f'Saving logs to {save_dir_logger}/{name_logger}')
@@ -81,21 +121,35 @@ def main() -> None:
     parser.add_argument('--break_activations', 
                         type = bool, 
                         default = False) 
+    parser.add_argument('--freeze_weights', 
+                        type = bool, 
+                        default = False)
+    parser.add_argument('--freeze_bias', 
+                        type = bool, 
+                        default = False)
+    parser.add_argument('--break_dataloader',
+                        type = bool, 
+                        default = False)
     args = parser.parse_args()  
+
 
 
     if args.data_type == 'linear':
         train_loader, val_loader = generate_linear_dataloaders()
     elif args.data_type == 'nonlinear':
-        train_loader, val_loader  = generate_nonlinear_dataloaders()
+        train_loader, val_loader  = generate_nonlinear_dataloaders(args.break_dataloader)
         output_dim = 2
+    
+    torch.manual_seed(4573)
 
     train_model(train_loader = train_loader,
                 val_loader = val_loader,
                 save_dir_logger = args.save_dir_logger,
                 name_logger = args.name_logger,
                 break_activations = args.break_activations,
-                output_dim = output_dim
+                output_dim = output_dim,
+                freeze_weights= args.freeze_weights,
+                freeze_bias = args.freeze_bias
                 )
 
     logger.info('Reformat metrics...')
