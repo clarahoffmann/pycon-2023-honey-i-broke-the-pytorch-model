@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 st.title("🔨 Breaking a model")
 st.sidebar.markdown("Breaking a model", unsafe_allow_html=True)
 
-tab1, tab2, tab3 = st.tabs(["Model components", "In-depth look", "Breakage points"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["Model components", "In-depth look", "Breakage points", "Isolating breakage", "Debugging cookbook"])
 with tab1: 
         col1, col2 = st.columns([1,7])
         with col1:
@@ -25,7 +25,7 @@ with tab2:
         st.image(image, caption='In-detail look')
 
 with tab3:
-    col1, col2= st.columns([2,4])
+    col1, col2= st.columns([3,4])
 
     m = st.markdown("""
     <style>
@@ -136,6 +136,44 @@ with tab3:
         st.subheader('''Loss with different breakage''')
         st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)
     
+with tab4:
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader('Why is debugging DL models hard?')
+        st.write('''# 
+                    \n - **🐞 Bug identification**: Difficult to *identify breaking points* when several components are broken
+                    \n - **⏰💸 Time & cost factor**: Several training runs are expensive and time-consuming
+                    \n - **🚧 Software Engineering based tests not helpful in-dev**: Go against *fail fast, fail early* nature of ML development process
+                    '''
+                    )
+        st.subheader('How can we speed up the debugging process?')
+        st.write('''
+                    \n - **➿ Redundancy of bugs**: Some typical bugs occur over and over again - just at different locations
+                    \n - **🗃️ Overcome the black-box paradigm**: Much more information than metrics are available from networks - but often unused
+                    \n - **✨ Isolate components**: Create some components that we know to be flawless
+                ''')
+
+    with col2:
+        st.subheader('Entangled Bugs 🐞')
+        image_directory = "pages/images/spiderman_bugs.jpeg"
+        image = Image.open(image_directory)
+        st.image(image)
+
+with tab5:
+    st.subheader('Debugging Cookbook 😋')
+    st.write('''1. **Data checks**: 
+                 \n   - Create synthetic training and validation data
+                 \n   - Check data redundancy & leakage
+                 \n   - Check label correctness
+                 \n2. **Pre-train checks in standardized format**: 
+                 \n   - Does the model overfit?
+                 \n   - Weight updates correct?
+                 \n   - Input/Output ranges correct?
+                 \n3. **Post-train checks**: 
+                 \n   -  Weight structure adequate?
+                ''')
+
+
 
     #tab1, tab2, tab3 = st.tabs(["Loss", "Metrics", "Weight Updates"])
     #with tab1:

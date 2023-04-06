@@ -21,7 +21,7 @@ poetry shell
 and run the presentation 
 
 ```
-streamlit run main.py
+streamlit run Home.py
 ```
 
 The presentation should now be available in a new browser tab

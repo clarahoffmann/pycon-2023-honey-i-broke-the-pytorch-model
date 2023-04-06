@@ -18,6 +18,8 @@ pytorch-lightning = "^2.0.1"
 loguru = "^0.6.0"
 scikit-learn = "^1.2.2"
 streamlit-extras = "^0.2.7"
+weightwatcher = "^0.7.0.9"
+torchvision = "^0.15.1"
 
 
 [build-system]
