@@ -41,7 +41,7 @@ with col1:
         1, 512, (25, 75), key = 'width slider')
 
         ship_height_input = st.slider(
-        'Select min and max ship width',
+        'Select min and max ship height',
         1, 512, (25, 75), key = 'height slider')
 
 

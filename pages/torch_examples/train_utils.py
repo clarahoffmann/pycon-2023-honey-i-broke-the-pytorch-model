@@ -175,6 +175,69 @@ class SimpleDnn(pl.LightningModule):
         return optimizer
 
 
+class LargeEncoder(nn.Module):
+    """
+    Simple encoder
+    """
+
+    def __init__(self, input_dim: int, output_dim: int) -> None:
+        """Setup model layers"""
+        super().__init__()
+        self.dense1 =  nn.Linear(input_dim, 10)
+        self.dense2 = nn.Linear(10, 10)
+        self.dense3 = nn.Linear(10, 10)
+        self.dense4 = nn.Linear(10, 10)
+        self.dense5 = nn.Linear(10, 10)
+        self.dense6 = nn.Linear(10, output_dim)
+        self.relu = nn.ReLU()
+        
+        self.output_dim = output_dim
+        self.input_dim = input_dim
+
+    def forward(self, x: torch.Tensor) -> nn.Sequential:
+        """Forward pass through layers"""
+        x = self.dense1(x)
+        x = self.relu(x)
+        x = self.dense2(x)
+        x = self.relu(x)
+        x = self.dense3(x)
+        x = self.relu(x)
+        x = self.dense4(x)
+        x = self.relu(x)
+        x = self.dense5(x)
+        x = self.relu(x)
+        x = self.dense6(x)
+        return x
+
+class LargeLinearEncoder(nn.Module):
+    """
+    Simple encoder
+    """
+
+    def __init__(self, input_dim: int, output_dim: int) -> None:
+        """Setup model layers"""
+        super().__init__()
+        self.dense1 =  nn.Linear(input_dim, 10)
+        self.dense2 = nn.Linear(10, 10)
+        self.dense3 = nn.Linear(10, 10)
+        self.dense4 = nn.Linear(10, 10)
+        self.dense5 = nn.Linear(10, 10)
+        self.dense6 = nn.Linear(10, output_dim)
+        
+        self.output_dim = output_dim
+        self.input_dim = input_dim
+
+    def forward(self, x: torch.Tensor) -> nn.Sequential:
+        """Forward pass through layers"""
+        x = self.dense1(x)
+        x = self.dense2(x)
+        x = self.dense3(x)
+        x = self.dense4(x)
+        x = self.dense5(x)
+        x = self.dense6(x)
+        return x
+
+
 def generate_linear_dataloaders() -> Tuple[DataLoader]:
     # generate data
     data, labels = generate_mv_data(KEY, MEANS, VARIANCES, NUM_SAMPLES, 3)
@@ -219,34 +282,37 @@ def train_model(train_loader: DataLoader,
                 freeze_weights: str = False, 
                 freeze_bias: str = False, 
                 input_dim: int = 2, 
-                output_dim: int = 3) -> None:
+                output_dim: int = 3,
+                weight_watcher: bool = False) -> None:
     
     logger.info('Define model and logger')
+
+    if not weight_watcher:
+        simple_dnn = SimpleDnn(Encoder(input_dim = input_dim, output_dim = output_dim), task_type = 'classification')
+    else:
+        simple_dnn = SimpleDnn(LargeEncoder(input_dim = input_dim, output_dim = output_dim), task_type = 'classification')
+
     if break_activations:
         logger.info('CAUTION: training with linear activation functions')
-        simple_dnn = SimpleDnn(Linear_Encoder(input_dim = input_dim, 
-                                              output_dim = output_dim), 
-                               task_type = 'classification')
+        if not weight_watcher:
+            simple_dnn = SimpleDnn(Linear_Encoder(input_dim = input_dim, 
+                                                output_dim = output_dim), 
+                                task_type = 'classification')
+        else:
+            simple_dnn = SimpleDnn(LargeLinearEncoder(input_dim = input_dim, 
+                                                output_dim = output_dim), 
+                                task_type = 'classification')
     elif freeze_weights:
-        simple_dnn = SimpleDnn(Encoder(input_dim = input_dim, output_dim = output_dim), task_type = 'classification')
-
         num_params = len([param for param in simple_dnn.parameters()])
         for i, param in zip(range(num_params), simple_dnn.parameters()):
             if i in [num_params-1, num_params -2] :
                 param.requires_grad = False
     
     elif freeze_bias:
-        simple_dnn = SimpleDnn(Encoder(input_dim = input_dim, output_dim = output_dim), task_type = 'classification')
-
         num_params = len([param for param in simple_dnn.parameters()])
         for i, param in zip(range(num_params), simple_dnn.parameters()):
             if i == num_params-1 :
                 param.requires_grad = False
-
-    else:
-        simple_dnn = SimpleDnn(Encoder(input_dim = input_dim, 
-                                       output_dim = output_dim), 
-                                task_type = 'classification')
     
     csv_logger = CSVLogger(save_dir=save_dir_logger, name = name_logger)
 

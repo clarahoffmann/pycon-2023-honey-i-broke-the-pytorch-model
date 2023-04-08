@@ -20,6 +20,8 @@ scikit-learn = "^1.2.2"
 streamlit-extras = "^0.2.7"
 weightwatcher = "^0.7.0.9"
 torchvision = "^0.15.1"
+cleanlab = "^2.3.1"
+skorch = "^0.12.1"
 
 
 [build-system]

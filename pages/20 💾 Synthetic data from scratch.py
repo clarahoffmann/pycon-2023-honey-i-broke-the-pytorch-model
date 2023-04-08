@@ -104,7 +104,7 @@ with tab2:
                ''')
 
                st.write('''
-                    Somde combination of nonlinear functions will also do the job
+                    Some combination of nonlinear functions will also do the job
                     \n $y = \sin(x_1) + \cos(x_2) + \epsilon,$
                     \n $\epsilon \sim \mathcal{N}(0,1)$
                     ''')

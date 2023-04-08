@@ -35,12 +35,16 @@ def main() -> None:
     parser.add_argument('--break_dataloader',
                         type = bool, 
                         default = False)
+    parser.add_argument('--weight_watcher',
+                        type = bool, 
+                        default = False)
     args = parser.parse_args()  
 
 
 
     if args.data_type == 'linear':
         train_loader, val_loader = generate_linear_dataloaders()
+        output_dim = 3
     elif args.data_type == 'nonlinear':
         train_loader, val_loader  = generate_nonlinear_dataloaders(args.break_dataloader)
         output_dim = 2
@@ -54,7 +58,8 @@ def main() -> None:
                 break_activations = args.break_activations,
                 output_dim = output_dim,
                 freeze_weights= args.freeze_weights,
-                freeze_bias = args.freeze_bias
+                freeze_bias = args.freeze_bias,
+                weight_watcher = args.weight_watcher,
                 )
 
     logger.info('Reformat metrics...')
@@ -63,7 +68,7 @@ def main() -> None:
     output_path = Path('reformatted_metrics') / (args.output_file_name + '.csv')
     format_csv(input_path, ['train_loss', 'val_loss'], output_path)
 
-    logger.info(f'... finished and written to reformatted_metrics/{output_path}.csv')
+    logger.info(f'... finished and written to reformatted_metrics/{output_path}')
 
 
 if __name__ == "__main__":

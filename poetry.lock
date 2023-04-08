@@ -319,6 +319,25 @@ files = [
 ]
 
 [[package]]
+name = "cleanlab"
+version = "2.3.1"
+description = "The standard package for data-centric AI, machine learning with label errors, and automatically finding and fixing dataset issues in Python."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "cleanlab-2.3.1-py3-none-any.whl", hash = "sha256:534877bde3e12e3e24737fe76134e841387b160fd151c618c3a66791512630d8"},
+    {file = "cleanlab-2.3.1.tar.gz", hash = "sha256:4bd9fc9dfa853b7b1fcf010c28ba09b6b7c7816180cde1498dbd1c752039cd0c"},
+]
+
+[package.dependencies]
+numpy = ">=1.20.0"
+pandas = ">=1.1.5"
+scikit-learn = ">=1.0"
+termcolor = ">=2.0.0"
+tqdm = ">=4.53.0"
+
+[[package]]
 name = "click"
 version = "8.1.3"
 description = "Composable command line interface toolkit"
@@ -2365,6 +2384,29 @@ files = [
 ]
 
 [[package]]
+name = "skorch"
+version = "0.12.1"
+description = "scikit-learn compatible neural network library for pytorch"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "skorch-0.12.1-py3-none-any.whl", hash = "sha256:f5ef662629c86487e38ec42d7a5b921ae296a198703cb41f8d9869347ba8e238"},
+    {file = "skorch-0.12.1.tar.gz", hash = "sha256:7e335b358fc3afb9605463eb1c94ef3c6ba1c8f47a2154bba21050308f89d7e9"},
+]
+
+[package.dependencies]
+numpy = ">=1.13.3"
+scikit-learn = ">=0.22.0"
+scipy = ">=1.1.0"
+tabulate = ">=0.7.7"
+tqdm = ">=4.14.0"
+
+[package.extras]
+docs = ["Sphinx", "numpydoc", "sphinx-rtd-theme"]
+testing = ["pytest", "pytest-cov"]
+
+[[package]]
 name = "smmap"
 version = "5.0.0"
 description = "A pure Python implementation of a sliding window memory map manager"
@@ -2612,6 +2654,21 @@ files = [
 mpmath = ">=0.19"
 
 [[package]]
+name = "tabulate"
+version = "0.9.0"
+description = "Pretty-print tabular data"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "tabulate-0.9.0-py3-none-any.whl", hash = "sha256:024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f"},
+    {file = "tabulate-0.9.0.tar.gz", hash = "sha256:0095b12bf5966de529c0feb1fa08671671b3368eec77d7ef7ab114be2c068b3c"},
+]
+
+[package.extras]
+widechars = ["wcwidth"]
+
+[[package]]
 name = "tenacity"
 version = "8.2.2"
 description = "Retry code until it succeeds"
@@ -2625,6 +2682,21 @@ files = [
 
 [package.extras]
 doc = ["reno", "sphinx", "tornado (>=4.5)"]
+
+[[package]]
+name = "termcolor"
+version = "2.2.0"
+description = "ANSI color formatting for output in terminal"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "termcolor-2.2.0-py3-none-any.whl", hash = "sha256:91ddd848e7251200eac969846cbae2dacd7d71c2871e92733289e7e3666f48e7"},
+    {file = "termcolor-2.2.0.tar.gz", hash = "sha256:dfc8ac3f350788f23b2947b3e6cfa5a53b630b612e6cd8965a015a776020b99a"},
+]
+
+[package.extras]
+tests = ["pytest", "pytest-cov"]
 
 [[package]]
 name = "threadpoolctl"
@@ -3154,4 +3226,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.9.7 || >3.9.7,<4.0"
-content-hash = "489a73379b5e535ce60ce7dc15136c838361f269abc68ad76107bf9b894444bf"
+content-hash = "141285a2f234362c7506b871c4ec8823bcce2a596ff3fb3657a892cafc57d889"

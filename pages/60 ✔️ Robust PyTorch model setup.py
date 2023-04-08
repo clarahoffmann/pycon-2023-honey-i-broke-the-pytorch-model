@@ -12,3 +12,6 @@ st.sidebar.markdown("Robust PyTorch model setup")
 
 # choose certain model bugs
 # then show whether they are caught by checks and tests or not (and how)
+
+
+# fake tests in fixtures
