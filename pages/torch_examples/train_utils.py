@@ -23,6 +23,8 @@ from typing import Tuple
 from sklearn.datasets import make_circles
 
 BATCH_SIZE = 32
+EPOCHS = 200
+LOG_EVERY_N_STEPS = 20
 
 LOSSES = {
     "classification": F.binary_cross_entropy_with_logits,
@@ -319,6 +321,6 @@ def train_model(train_loader: DataLoader,
     logger.info(f'Saving logs to {save_dir_logger}/{name_logger}')
     
     logger.info('Start model training')
-    trainer = pl.Trainer(logger=csv_logger, max_epochs = 50, log_every_n_steps=20)
+    trainer = pl.Trainer(logger=csv_logger, max_epochs = EPOCHS, log_every_n_steps=LOG_EVERY_N_STEPS)
     trainer.fit(model=simple_dnn, train_dataloaders = train_loader, val_dataloaders = val_loader)
     logger.info('Training finished successfully')

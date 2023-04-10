@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 from streamlit_extras.badges import badge
 
@@ -19,7 +20,7 @@ m = st.markdown("""
 st.markdown("# Standalone diagnostics 🩺")
 st.sidebar.markdown("Standalone diagnostics 🩺")
 
-tab1, tab2 = st.tabs(["Weight analysis", "Label analysis"])
+tab1, tab2, tab3 = st.tabs(["Weight analysis", "Label analysis", "Label analysis in action"])
 
 with tab1:
     st.subheader('🎯 Predictive accuracy without training or validation data') 
@@ -39,6 +40,7 @@ with tab1:
         st.latex(r''' \alpha \approx 2 ''')
         st.write('''- High values of indicate that a layer is *not well trained*.''')
         st.write(''' *Source: Implicit Self-Regularization in Deep Neural Networks: Evidence from Random Matrix Theory and Implications for Learning, JMLR (2021)*''')
+        st.write('''🔗 https://github.com/CalculatedContent/WeightWatcher''')
 
         df = pd.read_csv('pages/torch_examples/weightwatcher_metrics/circle.csv')
         df['label'] = ['no breakage']*len(df)
@@ -76,6 +78,7 @@ with tab1:
                                 title='Alpha',
                                 marginal="rug",
                                 )
+            fig_metrics.update_layout(xaxis_range=[0,5], yaxis_range=[0,3])
             fig_metrics.update_coloraxes(showscale=False)
             st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)
 
@@ -87,27 +90,111 @@ with tab2:
     st.subheader('🏷️ Identifying wrong labels') 
     col1, col2 = st.columns(2)
     with col1:
-        cleanlab_logo = Image.open('pages/images/cleanlab_logo.png')
-        st.image(cleanlab_logo, width=200)
-        st.write('''Identify wrong labels in your dataset after training
-        \n  - Label noise prediction
-        \n  - Estimate predictive performance if labels were clean
-        \n  - Estimate overall data quality''')
-    with col2:
-        df = pd.read_csv('pages/torch_examples/label_mixup/circles_corrupted.csv')
+        #cleanlab_logo = Image.open('pages/images/cleanlab_logo.png')
+        #st.image(cleanlab_logo, width=200)
+        st.subheader('''Main idea''')
+        
+        st.write('''Identify *curable* data issues based on a *trained* classifier
+                    \n - *Mislabeled examples* based on class scores
+                    \n - Consensus with *multiple annotators*
+                    \n - Scores to guide *active learning*
+                    \n - Outlier/Out-of-distribution detection''')
+        self_confidence_img = Image.open('pages/images/self_confidence.png')
+        st.image(self_confidence_img, width = 200)
+        st.write('''🔗 https://github.com/cleanlab/cleanlab''')
 
+    with col2:
+        st.subheader('''Practical Example''')
+        st.write('**1. Reformat *trained* PyTorch model to sklearn object**')
+        st.code('''
+        model_skorch = NeuralNetClassifier(simple_dnn.encoder)
+cl = cleanlab.classification.CleanLearning(model_skorch)
+    ''')
+        st.write('**2. Prediction with cross validation**')
+        st.code('''
+                   pred_probs = cross_val_predict(
+                        model_skorch,
+                        data_circles,
+                        label_circles,
+                        cv=3,
+                        method="predict_proba",
+                    )
+predicted_labels = pred_probs.argmax(axis=1)''')
+        st.write('**3. Rank label issues**')
+        st.code('''       
+                  ranked_label_issues = find_label_issues(
+                  label_circles,
+                  pred_probs,
+                  return_indices_ranked_by="self_confidence",
+            )''')
+    
+    
+with tab3:
+    st.subheader('Label Analysis in Action')
+        
+    df = pd.read_csv('pages/torch_examples/label_mixup/circles_uncorrupted.csv')
+
+    cleanlab = False
+    col1, col2, col3 = st.columns([1,2,5])
+    with col1:
+        if st.button('''Mix labels 🎲'''):
+            df = pd.read_csv('pages/torch_examples/label_mixup/circles_corrupted.csv')
+    with col2: 
+        if st.button('''🫧 Cleanlab prediction'''):
+            cleanlab = True
+            df = pd.read_csv('pages/torch_examples/label_mixup/circles_corrupted.csv')
+            df_corrupted_pred = pd.read_csv('pages/torch_examples/label_mixup/circles_corrupted_cleanlab_pred.csv')
+    
+    col1, col2 = st.columns(2)
+    with col1: 
         fig_circles = px.scatter(
                     df,
                     x='x1',
                     y='x2',
                     color='labels',
                     size_max=60,
-                    color_continuous_scale = px.colors.sequential.Peach,
-                    opacity = 0.7,
+                    color_continuous_scale = px.colors.sequential.Bluered,
+                    opacity = 0.3,
+                    title='(Un-)Corrupted Data'
                     )
+        
+        if cleanlab:
+            fig_circles.add_trace(go.Scatter(
+                x=df_corrupted_pred['x1'],
+                y=df_corrupted_pred['x2'],
+                mode='markers',
+                marker=dict(
+                    size=15,
+                    color='green',
+                    opacity=0.2
+                ),
+                name='cleanlab prediction'
+            ))
 
         fig_circles = fig_circles.update_coloraxes(showscale=False)
+        fig_circles.update_layout(legend=dict(
+                                    yanchor="top",
+                                    y=0.99,
+                                    xanchor="left",
+                                    x=0.01
+                                ))
         st.plotly_chart(fig_circles, theme="streamlit", use_container_width=True)
-
-        st.write(''' code examples heres ''')
     
+    with col2:
+        df = pd.read_csv('pages/torch_examples/reformatted_metrics/circles_cleanlab.csv')
+        df_corrupted = pd.read_csv('pages/torch_examples/reformatted_metrics/circles_cleanlab_corrupted.csv')
+
+        df_corrupted.loc[(df_corrupted.label == 'train_loss'),'label']='train loss (label mixup)'
+        df_corrupted.loc[(df_corrupted.label == 'val_loss'),'label']='val loss (label mixup)'
+
+        df_plot = pd.concat([df, df_corrupted])
+        fig_loss = px.line(
+                df_plot,
+                x='epoch',
+                y='metric',
+                color='label',
+                title='Loss',
+                )
+        
+        fig_loss.update_coloraxes(showscale=False)
+        st.plotly_chart(fig_loss, theme="streamlit", use_container_width=True)

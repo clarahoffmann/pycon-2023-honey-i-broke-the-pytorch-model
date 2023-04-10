@@ -170,10 +170,6 @@ with tab2:
                     fig_metrics.update_coloraxes(showscale=False)
                     st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)   
 
-
-
-
-
 with tab3:
 
      col1, col2 = st.columns([1,1])

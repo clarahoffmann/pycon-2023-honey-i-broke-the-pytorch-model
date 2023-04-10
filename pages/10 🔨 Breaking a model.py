@@ -83,8 +83,8 @@ with tab3:
         #with col2:
         if st.button('🧊 Freeze bias', key = 'freeze_bias'):
             df_freeze_bias = pd.read_csv('pages/torch_examples/reformatted_metrics/circle_data_frozen_bias.csv')
-            df_freeze_bias.loc[(df_freeze_bias.label == 'train_loss'),'label']='train loss (no relu)'
-            df_freeze_bias.loc[(df_freeze_bias.label == 'val_loss'),'label']='val loss (no relu)'
+            df_freeze_bias.loc[(df_freeze_bias.label == 'train_loss'),'label']='train loss (frozen bias)'
+            df_freeze_bias.loc[(df_freeze_bias.label == 'val_loss'),'label']='val loss (frozen bias)'
             df = pd.concat([df, df_freeze_bias])
 
             fig_metrics = px.line(
@@ -97,8 +97,8 @@ with tab3:
         #with col3:
         if st.button('🔄 Always return same training example'):
             df_dataloader_broken = pd.read_csv('pages/torch_examples/reformatted_metrics/circle_dataloader_broken.csv')
-            df_dataloader_broken.loc[(df_dataloader_broken.label == 'train_loss'),'label']='train loss (no relu)'
-            df_dataloader_broken.loc[(df_dataloader_broken.label == 'val_loss'),'label']='val loss (no relu)'
+            df_dataloader_broken.loc[(df_dataloader_broken.label == 'train_loss'),'label']='train loss (broken dataloader)'
+            df_dataloader_broken.loc[(df_dataloader_broken.label == 'val_loss'),'label']='val loss (broken dataloader)'
             df = pd.concat([df, df_dataloader_broken])
 
             fig_metrics = px.line(
@@ -125,12 +125,13 @@ with tab3:
             fig_metrics = px.line(
                 df,
                 x='epoch',
-                y='metric', #y=['Accuracy', 'Precision', 'Recall', 'F1'],
+                y='metric', 
                 color = 'label',
             )
 
         fig_metrics.update_coloraxes(showscale=False)
-        fig_metrics.update_yaxes(range = [0.3,0.8])
+        fig_metrics.update_yaxes(range = [0,0.8])
+        fig_metrics.update_xaxes(range = [0, 200])
 
     with col2: 
         st.subheader('''Loss with different breakage''')
@@ -172,18 +173,6 @@ with tab5:
                  \n3. **Post-train checks**: 
                  \n   -  Weight structure adequate?
                 ''')
-
-
-
-    #tab1, tab2, tab3 = st.tabs(["Loss", "Metrics", "Weight Updates"])
-    #with tab1:
-    #    st.write('''none''')
-        #st.plotly_chart(fig_loss, theme="streamlit", use_container_width=True)
-    #with tab2:
-    #    st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)
-    #    fig_metrics.update_coloraxes(showscale=False)
-    #with tab3:
-    #    st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)
 
 
 
