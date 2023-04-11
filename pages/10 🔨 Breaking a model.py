@@ -6,25 +6,24 @@ import pandas as pd
 import plotly.graph_objects as go
 
 st.title("🔨 Breaking a model")
-st.sidebar.markdown("Breaking a model", unsafe_allow_html=True)
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["Model components", "In-depth look", "Breakage points", "Isolating breakage", "Debugging cookbook"])
+tab1, tab2, tab3, tab4 = st.tabs(["Model components", "Breakage points", "Isolating breakage", "Debugging cookbook 😋"])
 with tab1: 
-        col1, col2 = st.columns([1,7])
-        with col1:
-            st.write(' ')
+        col1, col2, col3 = st.columns([5,1, 6])
 
-        with col2:
+        with col1:
+            st.subheader('Standard Setup for PyTorch models')
             image_directory = "pages/images/pipeline_components.png"
             image = Image.open(image_directory)
             st.image(image, caption='Typical PyTorch model components')
 
-with tab2:
-        image_directory = "pages/images/building_blocks.png"
-        image = Image.open(image_directory)
-        st.image(image, caption='In-detail look')
+        with col3: 
+            st.subheader('Breakage-susceptible components')
+            image_directory = "pages/images/building_blocks.png"
+            image = Image.open(image_directory)
+            st.image(image, caption='In-detail look')
 
-with tab3:
+with tab2:
     col1, col2= st.columns([3,4])
 
     m = st.markdown("""
@@ -137,7 +136,7 @@ with tab3:
         st.subheader('''Loss with different breakage''')
         st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)
     
-with tab4:
+with tab3:
     col1, col2 = st.columns(2)
     with col1:
         st.subheader('Why is debugging DL models hard?')
@@ -160,19 +159,32 @@ with tab4:
         image = Image.open(image_directory)
         st.image(image)
 
-with tab5:
-    st.subheader('Debugging Cookbook 😋')
-    st.write('''1. **Data checks**: 
-                 \n   - Create synthetic training and validation data
-                 \n   - Check data redundancy & leakage
-                 \n   - Check label correctness
-                 \n2. **Pre-train checks in standardized format**: 
-                 \n   - Does the model overfit?
-                 \n   - Weight updates correct?
-                 \n   - Input/Output ranges correct?
-                 \n3. **Post-train checks**: 
-                 \n   -  Weight structure adequate?
-                ''')
+with tab4:
+
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.write('''# 💾''')
+        st.subheader('Data component')
+        st.write('''- Create synthetic training and validation data
+                 \n- Check data redundancy & leakage
+                 \n- Check label correctness
+                 ''')
+
+    with col2:
+        st.write('''# 🧮''')
+        st.subheader('Model component')
+        st.write('''- Frozen weights and biases?
+                 \n- Input/output ranges correct?
+                 \n - Check overfitting on trivial cases
+                 ''')
+
+    with col3:
+        st.write('''# 🖇️''')
+        st.subheader('Data & Model interplay')
+        st.write('''- Learned weight structure adequate?
+                 \n- Mislabeling issues?
+                 \n - Expected behavior fulfilled?
+                 ''')
 
 
 

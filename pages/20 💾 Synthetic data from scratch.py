@@ -100,7 +100,8 @@ with tab2:
                     ''')  
                st.code('''
                from sklearn.datasets import make_circles
-               make_circles(n_samples=NUM_SAMPLES, factor=0.5, noise=0.05)
+               
+make_circles(n_samples=NUM_SAMPLES, factor=0.5, noise=0.05)
                ''')
 
                st.write('''

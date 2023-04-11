@@ -2,7 +2,6 @@ import streamlit as st
 from streamlit_extras.badges import badge
 
 st.markdown("# Packages for synthetic data")
-st.sidebar.markdown("Packages for synthetic data")
 
 # Rules:
 #st.write('Useful questions:')
@@ -25,7 +24,7 @@ with tab2:
     badge(type="pypi", name="plaitpy", url="https://github.com/plaitpy/plaitpy")
 
 with tab3: 
-    st.subheader('Computer Vision:: Zpy')
+    st.subheader('Computer Vision:: ZumoLabs Zpy')
     badge(type="pypi", name="zpy", url="https://zumolabs.github.io/zpy/")
 
 with tab4: 

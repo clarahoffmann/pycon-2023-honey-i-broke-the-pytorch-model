@@ -18,7 +18,6 @@ m = st.markdown("""
     </style>""", unsafe_allow_html=True)
 
 st.markdown("# Standalone diagnostics 🩺")
-st.sidebar.markdown("Standalone diagnostics 🩺")
 
 tab1, tab2, tab3 = st.tabs(["Weight analysis", "Label analysis", "Label analysis in action"])
 
