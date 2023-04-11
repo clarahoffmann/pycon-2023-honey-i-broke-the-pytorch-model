@@ -8,7 +8,6 @@ tab1, tab2, tab3, tab4= st.tabs(["Test philosophy", "📉 torchcheck", "Data Lea
 
 
 with tab1:
-    st.subheader('Test philosophy')
 
     st.write('''**Classic Software Engineering testing workflows can be harmful in ML development process**''')
     col1, col2, col3 = st.columns([9,1,9])
@@ -22,9 +21,11 @@ with tab1:
 with tab2:
     col1, col2 = st.columns(2)
     with col1:
-        st.subheader('Input/Output range tests')
-        st.write('''Any variables that are confined to certain ranges can be checked, especially:
-            \n **Output range of final layers**, **Input range of first layers**, **Loss functions**, **Invalid values**''')
+        st.subheader('Input/Output Ranges & Weight Updates')
+        st.write('''Check for:
+            \n - Output range of final layers, Input range of first layers, Loss functions, Invalid values
+            
+            \n - Correct weight updates ''')
     
 
         st.subheader('''**Example**: torchcheck''')

@@ -91,7 +91,7 @@ with tab2:
     with col1:
         #cleanlab_logo = Image.open('pages/images/cleanlab_logo.png')
         #st.image(cleanlab_logo, width=200)
-        st.subheader('''Main idea''')
+        st.subheader('''Cleanlab''')
         
         st.write('''Identify *curable* data issues based on a *trained* classifier
                     \n - *Mislabeled examples* based on class scores

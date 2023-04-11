@@ -13,7 +13,7 @@ jax = "^0.4.8"
 jaxlib = "^0.4.7"
 streamlit = "^1.20.0"
 plotly = "^5.14.0"
-matplotlib = "^3.7.1"
+matplotlib = "^3.3.3"
 pytorch-lightning = "^2.0.1"
 loguru = "^0.6.0"
 scikit-learn = "^1.2.2"
@@ -22,6 +22,7 @@ weightwatcher = "^0.7.0.9"
 torchvision = "^0.15.1"
 cleanlab = "^2.3.1"
 skorch = "^0.12.1"
+timeseries-generator = "^0.1.0"
 
 
 [build-system]

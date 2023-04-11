@@ -5,11 +5,9 @@ import pandas as pd
 from sklearn.datasets import make_circles
 from PIL import Image
 
-from streamlit_extras.colored_header import colored_header
-
 st.markdown("# Synthetic data from scratch")
 
-tab1, tab2, tab3 = st.tabs(["Linear", "Nonlinear", "Why custom data?"])
+tab1, tab2 = st.tabs(["Linear", "Nonlinear"])
 with tab1:
 
      tab1_sub, tab2_sub = st.tabs(["Data", "Model breakage"])
@@ -100,7 +98,7 @@ with tab2:
                     ''')  
                st.code('''
                from sklearn.datasets import make_circles
-               
+
 make_circles(n_samples=NUM_SAMPLES, factor=0.5, noise=0.05)
                ''')
 
@@ -171,30 +169,6 @@ make_circles(n_samples=NUM_SAMPLES, factor=0.5, noise=0.05)
                     fig_metrics.update_coloraxes(showscale=False)
                     st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)   
 
-with tab3:
-
-     col1, col2 = st.columns([1,1])
-     with col1:
-          st.subheader('Test Model Behavior 🧪')
-          st.write('''Data from scratch is more appropriate in research settings
-              \n for example to test behavior with:''')
-
-          lst = ['Out of distribution data', 
-               'Anomaly Detection',
-               'Uncertainty Estimation']
-          s = ''
-          for i in lst:
-               s += "- " + i + "\n"
-          st.markdown(s)
-
-          st.subheader('Start development before data arrival 📭')
-
-
-     with col2: 
-          st.subheader('Entangled Bugs 🐞')
-          image_directory = "pages/images/spiderman_bugs.jpeg"
-          image = Image.open(image_directory)
-          st.image(image)
 
 
 
