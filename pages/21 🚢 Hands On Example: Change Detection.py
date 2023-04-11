@@ -18,17 +18,15 @@ with tab1:
         with col1: 
                 st.subheader(''' Common data problems in development''')
                 st.write('''Custom applications are often so specific that no training data is available. 
-                        \n Common issues:
                         \n - we have some data in target format available -  but only enough for validation
                         \n - we have a specific **delivery date** for data (after labeling and cleaning), but want to start development now''')
         with col2:
                 st.subheader('Use Case: Identify changes in harbors')
+                st.image(harbor_img, caption='Changes in harbor activity over time')
                 st.write('''
-                \n  Issues:
                 \n - satellite data is expensive, often unclean (clouds, reflections)
                 \n - labelling is needed at least for validation
-                \n - combination of freely available datasets tedious and likely to be to heterogeneous''')
-                st.image(harbor_img, caption='Changes in harbor activity over time', width = 400)
+                \n - combination of freely available datasets tedious and likely to be to heterogeneous''')            
 
         with col3: 
                 st.subheader('Complicated workaround')
