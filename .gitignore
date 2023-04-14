@@ -2,7 +2,6 @@
 logs
 **/logs
 **/logs_model
-c
 
 # Ignore Mac system files
 .DS_store
