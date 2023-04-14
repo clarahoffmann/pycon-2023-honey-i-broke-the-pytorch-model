@@ -7,7 +7,7 @@ from streamlit_extras.badges import badge
 
 st.markdown("# Packages for synthetic data")
 
-tab1, tab2= st.tabs(["Tabular data", "Computer Vision"])
+tab1, tab2, tab3= st.tabs(["Tabular data", "Computer Vision", "Our status"])
 
 with tab1:
     col1, col2 = st.columns(2)
@@ -81,3 +81,22 @@ with tab2:
 
         frido_examples = Image.open('pages/images/frido_examples.png')
         st.image(frido_examples)
+
+
+with tab3:
+  st.write('''## Let's check our debugging status...''')
+  st.write('''#''')
+  col1, col2, col3 = st.columns(3)
+
+  with col1:
+        st.write('''# 💾 ✅''')
+        st.subheader('*Data component*')
+
+  with col2:
+        st.write('''# 🧮''')
+        st.subheader('Model component')
+
+
+  with col3:
+        st.write('''# 🖇️''')
+        st.subheader('Data & Model interplay')

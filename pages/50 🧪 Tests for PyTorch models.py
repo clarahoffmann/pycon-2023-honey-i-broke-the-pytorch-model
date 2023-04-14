@@ -4,7 +4,7 @@ from streamlit_extras.badges import badge
 
 st.markdown("# Tests & checks for PyTorch models")
 
-tab1, tab2, tab3= st.tabs(["Test philosophy", "📉 torchcheck", "Ingredients of a sucessful ML test suite"])
+tab1, tab2, tab3, tab4= st.tabs(["🦉 Test philosophy", "📉 torchcheck", "😋 Ingredients of a successful ML test suite", "Our status"])
 
 
 with tab1:
@@ -64,7 +64,7 @@ test_suite(model, loss_fn, optim, batch,
 with tab3:
     col1, col2 = st.columns(2)
     with col1:
-        st.write('''### Tests for Dataloaders:
+        st.write('''### 💾 Tests for Dataloaders:
                     \n *Data leakage*
         ''')
         st.code(''' assert not (train_set == val_set)''')
@@ -77,9 +77,9 @@ assert not (first == second)''')
         st.code(''' assert not torch.sum(torch.isnan(my_tensor))).item() ''')
         st.write('''*Data format*''')
         st.code('''assert input.shape == (BATCH_SIZE, CHANNELS, WIDTH, HEIGHT)''')
-        st.write('''**Tests for models:** Weight updates,  output ranges, output format, overfitting for trivial cases (small batches, single example) ''')
+        st.write('''**🧮 Tests for models:** Weight updates,  output ranges, output format, overfitting for trivial cases (small batches, single example) ''')
     with col2:
-        st.write('''### Test structure''')
+        st.write('''### 📁 Test structure''')
         st.write('''*Don't* use a project dependent test structure!''')
         st.code('''
                  \n pyproject.toml
@@ -97,7 +97,25 @@ src/
         dataloader_checks.py
         weight_checks.py
         directional_expectation_checks.py''')
-        st.write('''... then import into project''')
+        st.write('''... then import into *specific ML project*''')
         st.code('''
                 from ml_test.weight_checks import assert_vars_change
                 ''')
+
+with tab4:
+  st.write('''## Let's check our debugging status...''')
+  st.write('''#''')
+  col1, col2, col3 = st.columns(3)
+
+  with col1:
+        st.write('''# 💾 ✅''')
+        st.subheader('*Data component*')
+
+  with col2:
+        st.write('''# 🧮''')
+        st.subheader('Model component')
+
+
+  with col3:
+        st.write('''# 🖇️''')
+        st.subheader('Data & Model interplay')

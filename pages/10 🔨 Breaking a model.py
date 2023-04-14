@@ -173,15 +173,15 @@ with tab4:
     with col2:
         st.write('''# 🧮''')
         st.subheader('Model component')
-        st.write('''- Frozen weights and biases?
-                 \n- Input/output ranges correct?
+        st.write('''- Check updates for weights and biases
+                 \n- Check input/output ranges
                  \n - Check overfitting on trivial cases
                  ''')
 
     with col3:
         st.write('''# 🖇️''')
         st.subheader('Data & Model interplay')
-        st.write('''- Learned weight structure adequate?
-                 \n- Mislabeling issues?
-                 \n - Expected behavior fulfilled?
+        st.write('''- Check adequacy of learned weight structure
+                 \n- Check for mislabeled examples
+                 \n - Check for expected behavior
                  ''')

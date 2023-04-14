@@ -20,13 +20,22 @@ with tab1:
      col1, col2 = st.columns(2)
      with col1:
           synth_vs_real_img = Image.open('pages/images/synthetic_vs_real_data.png')
-          st.image(synth_vs_real_img, width=400)
+          st.write(''' # ''')
+          st.write(''' # ''')
+          st.image(synth_vs_real_img, width=300)
 
      with col2:
+          st.write(''' # ''')
           st.subheader('Synthetic data for debugging')
           st.write('''- We don't care about realistic looking data
                     \n - Reduce our data to the *most basic learnable characteristics*
-                    \n - Want a model that is bug-free and cheap to train''')
+                    \n - Want a model that is *bug-free* and *cheap to train*''')
+          st.write(''' # ''')
+          st.write(''' # ''')
+          st.subheader('How can we create it?')
+          st.write('''\n - Which minimum requirements must be fulfilled for our data?
+                      \n - How simple can we make our data without losing the ability to learn?''')
+
 
 with tab2:
 
