@@ -1,6 +1,6 @@
 import streamlit as st
-from streamlit_extras.badges import badge
 from PIL import Image
+from streamlit_extras.badges import badge
 
 st.markdown("# Tests & checks for PyTorch models")
 
@@ -14,7 +14,7 @@ with tab1:
     with col1:
         se_vs_ml = Image.open('pages/images/software_vs_ml_eng.png')
         st.image(se_vs_ml)
-    with col3: 
+    with col3:
         ml_test_suite = Image.open('pages/images/ml_test_suite.png')
         st.image(ml_test_suite)
 
@@ -24,9 +24,9 @@ with tab2:
         st.subheader('Input/Output Ranges & Weight Updates')
         st.write('''Check for:
             \n - Output range of final layers, Input range of first layers, Loss functions, Invalid values
-            
+
             \n - Correct weight updates ''')
-    
+
 
         st.subheader('''**Example**: torchcheck''')
         badge(type="pypi", name="torchtest", url="https://pypi.org/project/torchtest/")
@@ -61,34 +61,11 @@ test_suite(model, loss_fn, optim, batch,
 
      ''')
 
-
-
-
-    
-    #badge(type="pypi", name="torchcheck", url="https://github.com/pengyan510/torcheck")
-    #st.write('torchtest')  
-    #badge(type="pypi", name="torchtest", url="https://pypi.org/project/torchtest/")
-
-    # tensorflow
-    #badge(type="pypi", name="torchtest", url="https://github.com/Thenerdstation/mltest")
-
-
 with tab3:
-    st.header('Data Leakage tests')  
-    st.write('''Basic functionality to check whether variables are changing''')
-    
-
-with tab4: 
-    st.header('Data Leakage tests')  
+    st.header('Data Leakage tests')
     st.write('''Basic functionality to check whether variables are changing''')
 
 
-
-
-# here code snippets
-
-# go through cases, what can we catch?
-# any interesting cases that would occur by accident easily?
-
-
-
+with tab4:
+    st.header('Data Leakage tests')
+    st.write('''Basic functionality to check whether variables are changing''')

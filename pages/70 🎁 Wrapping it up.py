@@ -26,7 +26,7 @@ with col2:
     st.image(ml_test_suite, width = 300)
     st.write('''- *Software Engineering* based testing can be *harmful* for an ML dev process''')
     st.write('''- Experience of many ML Engineers can be *condensed* and made *transferable* to a *low-effort test suite*''')
-    
+
 
 
 
@@ -37,8 +37,5 @@ with col3:
     st.write('''- Model weights can be analyzed without data with **theoretically-founded metrics** (*weightwatcher*)
     \n - **Mislabeling of data** can be detected in an automated way (*cleanlab*)''')
 
-st.write('''# \n 
+st.write('''# \n
 *Additional sources for testing in ML projects:*''')
-    
-
-# illustrate pathway of debugging

@@ -1,14 +1,14 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 from PIL import Image
-import matplotlib.pyplot as plt
-import plotly.express as px
-import pandas as pd
-import plotly.graph_objects as go
 
 st.title("🔨 Breaking a model")
 
 tab1, tab2, tab3, tab4 = st.tabs(["Model components", "Breakage points", "Isolating breakage", "Debugging cookbook 😋"])
-with tab1: 
+with tab1:
         col1, col2, col3 = st.columns([5,1, 6])
 
         with col1:
@@ -17,7 +17,7 @@ with tab1:
             image = Image.open(image_directory)
             st.image(image, caption='Typical PyTorch model components')
 
-        with col3: 
+        with col3:
             st.subheader('Breakage-susceptible components')
             image_directory = "pages/images/building_blocks.png"
             image = Image.open(image_directory)
@@ -58,8 +58,8 @@ with tab2:
     with col1:
         st.subheader('''Model structure''')
         st.code('''self.layers = nn.Sequential(
-                nn.Linear(input_dim, 10), 
-                nn.ReLU(), 
+                nn.Linear(input_dim, 10),
+                nn.ReLU(),
                 nn.Linear(10, output_dim)
         )''')
 
@@ -92,7 +92,7 @@ with tab2:
                 y='metric',
                 color = 'label',
             )
-        
+
         #with col3:
         if st.button('🔄 Always return same training example'):
             df_dataloader_broken = pd.read_csv('pages/torch_examples/reformatted_metrics/circle_dataloader_broken.csv')
@@ -124,7 +124,7 @@ with tab2:
             fig_metrics = px.line(
                 df,
                 x='epoch',
-                y='metric', 
+                y='metric',
                 color = 'label',
             )
 
@@ -132,15 +132,15 @@ with tab2:
         fig_metrics.update_yaxes(range = [0,0.8])
         fig_metrics.update_xaxes(range = [0, 200])
 
-    with col2: 
+    with col2:
         st.subheader('''Loss with different breakage''')
         st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)
-    
+
 with tab3:
     col1, col2 = st.columns(2)
     with col1:
         st.subheader('Why is debugging DL models hard?')
-        st.write('''# 
+        st.write('''#
                     \n - **🐞 Bug identification**: Difficult to *identify breaking points* when several components are broken
                     \n - **⏰💸 Time & cost factor**: Several training runs are expensive and time-consuming
                     \n - **🚧 Software Engineering based tests not helpful in-dev**: Go against *fail fast, fail early* nature of ML development process
@@ -185,16 +185,3 @@ with tab4:
                  \n- Mislabeling issues?
                  \n - Expected behavior fulfilled?
                  ''')
-
-
-
-
-
-
-# badges for packages: https://extras.streamlit.app/Badges
-
-# stqdm: https://discuss.streamlit.io/t/stqdm-a-tqdm-like-progress-bar-for-streamlit/10097
-
-# example for loss plots (scroll down): https://towardsdatascience.com/10-features-your-streamlit-ml-app-cant-do-without-implemented-f6b4f0d66d36
-# https://wandb.ai/ayush-thakur/debug-neural-nets/reports/Visualizing-and-Debugging-Neural-Networks-with-PyTorch-and-Weights-Biases--Vmlldzo2OTUzNA
-# https://wandb.ai/ayush-thakur/debug-neural-nets/reports/Visualizing-and-Debugging-Neural-Networks-with-PyTorch-and-Weights-Biases--Vmlldzo2OTUzNA

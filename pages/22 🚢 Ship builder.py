@@ -1,11 +1,11 @@
-import streamlit as st
-from PIL import Image
+from typing import Tuple
 
 import jax
 import numpy as onp
-from jax import random
-from typing import Tuple
 import plotly.express as px
+import streamlit as st
+from jax import random
+from PIL import Image
 
 st.title('🚢 Walkthrough example: Ship Builder')
 
@@ -59,8 +59,8 @@ with col1:
 
 with col2:
         st.code('''
-                def generate_rectangle_coordinates(rng_key: random.PRNGKey, img_width: int, 
-                                                img_height: int, ship_width: Tuple, 
+                def generate_rectangle_coordinates(rng_key: random.PRNGKey, img_width: int,
+                                                img_height: int, ship_width: Tuple,
                                                 ship_height: Tuple) -> Tuple:
                         _, key_1, key_2 = jax.random.split(rng_key, 3)
                         # sample origin coordinates of ship
@@ -74,18 +74,15 @@ with col2:
                 ''', language="python")
 
         st.code('''
-                def make_image(width: int, height: int, ship_width: Tuple, 
+                def make_image(width: int, height: int, ship_width: Tuple,
                         ship_height: Tuple, num_ships: int) -> onp.array:
                         img = onp.zeros((width, height))
                         # generate ships
                         for i in range(num_ships):
                                 KEY = random.PRNGKey(i)
-                                ship_coords = generate_rectangle_coordinates(KEY, width, 
+                                ship_coords = generate_rectangle_coordinates(KEY, width,
                                                         height, ship_width, ship_height)
-                                img[int(ship_coords[0]):int(ship_coords[2]), 
+                                img[int(ship_coords[0]):int(ship_coords[2]),
                                 int(ship_coords[1]):int(ship_coords[3])] = 1
                         return img
                 ''', language="python")
-# afterward train a model with this
-
-

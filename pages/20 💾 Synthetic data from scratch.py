@@ -1,9 +1,16 @@
-import streamlit as st
-from pages.torch_examples.data_generation import MEANS, VARIANCES, KEY, generate_mv_data, NUM_SAMPLES
-import plotly.express as px
 import pandas as pd
-from sklearn.datasets import make_circles
+import plotly.express as px
+import streamlit as st
 from PIL import Image
+from sklearn.datasets import make_circles
+
+from pages.torch_examples.data_generation import (
+    KEY,
+    MEANS,
+    NUM_SAMPLES,
+    VARIANCES,
+    generate_mv_data,
+)
 
 st.markdown("# Synthetic data from scratch")
 
@@ -16,12 +23,12 @@ with tab1:
           with col1:
                st.write('''
                     Generate from three Gaussians:
-                    \n $X_1 \sim \mathcal{N}((1,2)^T, \Sigma_1)$ 
-                    \n $X_2 \sim \mathcal{N}((-1,-2)^T, \Sigma_2)$  
-                    \n $X_3 \sim \mathcal{N}((0,0.5)^T, \Sigma_3)$
+                    \n $X_1 \\sim \\mathcal{N}((1,2)^T, \\Sigma_1)$
+                    \n $X_2 \\sim \\mathcal{N}((-1,-2)^T, \\Sigma_2)$
+                    \n $X_3 \\sim \\mathcal{N}((0,0.5)^T, \\Sigma_3)$
                     \n
                     \n Data is lineary separable with some overlap
-                    ''')  
+                    ''')
 
           with col2:
                normal_data, normal_labels = generate_mv_data(KEY, MEANS, VARIANCES, NUM_SAMPLES, 3)
@@ -47,14 +54,14 @@ with tab1:
                st.code('''
                class Encoder(nn.Module):
                     """ Simple encoder """
-                    def __init__(self, 
-                              input_dim: int, 
+                    def __init__(self,
+                              input_dim: int,
                               output_dim: int) -> None:
                          """Setup model layers"""
                          super().__init__()
                          self.layers = nn.Sequential(
-                              nn.Linear(input_dim, 10), 
-                         🔨   nn.ReLU(), 
+                              nn.Linear(input_dim, 10),
+                         🔨   nn.ReLU(),
                               nn.Linear(10, output_dim)
                          ) ''')
 
@@ -83,19 +90,19 @@ with tab1:
                          color='label',
                          )
                     fig_metrics.update_coloraxes(showscale=False)
-                    st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)       
+                    st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)
 
 
 with tab2:
 
      subtab_11, subtab_12 = st.tabs(["Data", "Model breakage"])
-     
+
      with subtab_11:
           col1, col2 = st.columns(2)
           with col1:
                st.write('''
-                    Generate nonlinear concentric circles with 
-                    ''')  
+                    Generate nonlinear concentric circles with
+                    ''')
                st.code('''
                from sklearn.datasets import make_circles
 
@@ -104,8 +111,8 @@ make_circles(n_samples=NUM_SAMPLES, factor=0.5, noise=0.05)
 
                st.write('''
                     Some combination of nonlinear functions will also do the job
-                    \n $y = \sin(x_1) + \cos(x_2) + \epsilon,$
-                    \n $\epsilon \sim \mathcal{N}(0,1)$
+                    \n $y = \\sin(x_1) + \\cos(x_2) + \\epsilon,$
+                    \n $\\epsilon \\sim \\mathcal{N}(0,1)$
                     ''')
 
                data_circles, label_circles = make_circles(n_samples=NUM_SAMPLES, factor=0.5, noise=0.05)
@@ -130,16 +137,16 @@ make_circles(n_samples=NUM_SAMPLES, factor=0.5, noise=0.05)
                st.code('''
                class Encoder(nn.Module):
                     """ Simple encoder """
-                    def __init__(self, 
-                              input_dim: int, 
+                    def __init__(self,
+                              input_dim: int,
                               output_dim: int) -> None:
                          """Setup model layers"""
                          super().__init__()
                          self.layers = nn.Sequential(
-                              nn.Linear(input_dim, 10), 
-                         🔨   nn.ReLU(), 
+                              nn.Linear(input_dim, 10),
+                         🔨   nn.ReLU(),
                               nn.Linear(10, output_dim)
-                         ) ''')    
+                         ) ''')
 
 
           with col2:
@@ -167,20 +174,4 @@ make_circles(n_samples=NUM_SAMPLES, factor=0.5, noise=0.05)
                          color='label',
                          )
                     fig_metrics.update_coloraxes(showscale=False)
-                    st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)   
-
-
-
-
-
-#st.write('''Nonlinear regression model
-#     \n Most data you will get with this model is also available in packages - you will not really need to generate it this way
-#     \n only useful if you are testing specific properties of the model where you create data for certain scenarios
-#     \n for example out-of-distribution data, certain types of uncertainties, anomalies etc.''')
-
-#st.write('''Caution with benchmark datasets! even MNIST contains label errors''')
-# https://l7.curtisnorthcutt.com/label-errors -> cleanlab   
-
-
-
-
+                    st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)

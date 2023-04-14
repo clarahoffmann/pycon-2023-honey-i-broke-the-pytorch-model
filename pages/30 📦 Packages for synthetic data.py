@@ -1,24 +1,17 @@
-import streamlit as st
-from streamlit_extras.badges import badge
-from PIL import Image
 import pandas as pd
-from sklearn.datasets import make_circles
 import plotly.express as px
+import streamlit as st
+from PIL import Image
+from sklearn.datasets import make_circles
+from streamlit_extras.badges import badge
 
 st.markdown("# Packages for synthetic data")
 
-# Rules:
-#st.write('Useful questions:')
-#st.write('1. How simple can I make my data?')
-#st.write('2. If I wanted to sabotage my training - what would I do?')
-
-
-# walkthrough example change detection
 tab1, tab2= st.tabs(["Tabular data", "Computer Vision"])
 
-with tab1: 
+with tab1:
     col1, col2 = st.columns(2)
-    with col1: 
+    with col1:
         st.subheader('''sklearn sample_generators''')
         badge(type="pypi", name="sklearn", url="https://scikit-learn.org/stable/datasets/sample_generators.html")
         st.code('''
@@ -68,14 +61,14 @@ fields:
       - value: F
         ''')
 
-with tab2: 
+with tab2:
     col1, col2 = st.columns(2)
-    with col1: 
+    with col1:
         st.subheader('Computer Vision: ZumoLabs Zpy')
         st.write('https://github.com/ZumoLabs/zpy')
         badge(type="github", name="zpy", url="https://github.com/ZumoLabs/zpy")
         st.write('Generate synthetic data based on Blender')
-    
+
     with col2:
         st.subheader('Image generation based on semantic masks or layouts')
         st.write('''**Double Pooling GANs for Semantic Image Synthesis** 🔗 https://github.com/Ha0Tang/DPGAN''')
@@ -88,6 +81,3 @@ with tab2:
 
         frido_examples = Image.open('pages/images/frido_examples.png')
         st.image(frido_examples)
-
-# add some visual examples here
-
