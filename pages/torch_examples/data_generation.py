@@ -1,5 +1,4 @@
-" Utilities for discrete variable creation"
-# pylint: disable=import-error
+"Draw from several multivariate normal distributions"
 from typing import Tuple
 
 import jax
@@ -13,6 +12,7 @@ VARIANCES = jnp.array(
 KEY = random.PRNGKey(0)
 NUM_SAMPLES = 500
 NUM_CLASSES = 2
+
 
 def generate_mv_data(
     key: random.PRNGKey,
