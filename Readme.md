@@ -13,7 +13,7 @@ This presentation covers strategies to
 To run the streamlit app, follow the steps below:
 ## 1. Set-up
 
-Activate the poetry environment
+Activate the [poetry](https://python-poetry.org/docs/managing-environments/) environment
 ```
 poetry shell
 ```
