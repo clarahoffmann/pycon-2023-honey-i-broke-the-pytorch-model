@@ -4,7 +4,7 @@ from PIL import Image
 st.markdown("""# About me""")
 
 col1, col2 = st.columns([3, 3])
-img = Image.open("pages/images/logo_kleinlab_light.png")  # .resize((300, 300))
+img = Image.open("pages/images/logo_kleinlab_light.png")
 
 with col1:
 
@@ -35,4 +35,4 @@ with col1:
 
 
 with col2:
-    st.image(img, width=600)
+    st.image(img, use_column_width=True)

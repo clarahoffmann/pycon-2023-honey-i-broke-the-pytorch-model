@@ -19,10 +19,19 @@ with col1:
 with col2:
     st.write('''### 2. Pre-train tests & checks''')
     st.write('''*Can be as easy as one function call*''')
-    st.code('''model = MyFavoriteTransformer()
-            test_suite(model)''')
+    st.code('''from ml_test import test_suite
+
+model = MyFavoriteTransformer()
+test_suite(model)''')
 
 with col3:
     st.write('''### 3. Post-train checks''')
     st.write('''*Deliver metrics that are robust to data issues*''')
     st.image(cleanlab_img, width = 350)
+
+st.write('''# \n # \n # \n # \n # \n # \n ''')
+
+st.markdown(
+        """**Check out the repository for sources and additional information:**
+    \n 🔗 :blue[github.com/clarahoffmann/pycon-2023-honey-i-broke-the-pytorch-model]"""
+    )

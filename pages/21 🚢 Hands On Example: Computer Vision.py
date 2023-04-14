@@ -46,6 +46,7 @@ with tab2:
         col1, col2 = st.columns([1,2])
 
         with col1:
+                st.subheader('Dataset generation...')
                 num_ships = st.slider(
                 'Select number of ships',
                 1, 20, 1, key = 'number of ships slider')
@@ -72,6 +73,7 @@ with tab2:
 
 
         with col2:
+                st.subheader('... with two functions only')
                 st.code('''
                         def generate_rectangle_coordinates(rng_key: random.PRNGKey, img_width: int,
                                                         img_height: int, ship_width: Tuple,

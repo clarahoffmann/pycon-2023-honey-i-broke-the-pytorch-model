@@ -22,7 +22,7 @@ with tab1:
           synth_vs_real_img = Image.open('pages/images/synthetic_vs_real_data.png')
           st.write(''' # ''')
           st.write(''' # ''')
-          st.image(synth_vs_real_img, width=300)
+          st.image(synth_vs_real_img, use_column_width=True)
 
      with col2:
           st.write(''' # ''')

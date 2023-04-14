@@ -9,7 +9,7 @@ tab1, tab2, tab3, tab4= st.tabs(["🦉 Test philosophy", "📉 torchcheck", "�
 
 with tab1:
 
-    st.write('''**Classic Software Engineering testing workflows can be harmful in ML development process**''')
+    st.write(''' ***Classic Software Engineering testing workflows can be harmful in ML development process!***''')
     col1, col2, col3 = st.columns([9,1,9])
     with col1:
         se_vs_ml = Image.open('pages/images/software_vs_ml_eng.png')
@@ -109,11 +109,11 @@ with tab4:
 
   with col1:
         st.write('''# 💾 ✅''')
-        st.subheader('*Data component*')
+        st.subheader('*:green[Data component]*')
 
   with col2:
-        st.write('''# 🧮''')
-        st.subheader('Model component')
+        st.write('''# 🧮 ✅''')
+        st.subheader('*:green[Model component]*')
 
 
   with col3:
