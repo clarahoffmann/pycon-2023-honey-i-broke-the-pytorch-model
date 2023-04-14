@@ -38,3 +38,6 @@ All PyTorch code is contained in ```pages/torch_examples```
 - [Jeremy Jordan's blogpost](https://www.jeremyjordan.me/testing-ml/) about testing philosophy for ML
 - Testing for PyTorch with [torchcheck](https://github.com/pengyan510/torcheck)
 - Deprecated, but interesting test suites for < TF2.0: [mltest](https://github.com/Thenerdstation/mltest) and for PyTorch: [torchtest](https://github.com/suriyadeepan/torchtest)
+- Weight analysis without training or validation data: [weightwatcher](https://github.com/CalculatedContent/WeightWatcher)
+- Post-training label quality analysis: [cleanlab](https://github.com/cleanlab/cleanlab)
+- [Behavioral testing for NLP models](https://aclanthology.org/2020.acl-main.442/)

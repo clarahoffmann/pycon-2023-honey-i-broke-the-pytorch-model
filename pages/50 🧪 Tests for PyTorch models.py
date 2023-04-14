@@ -64,17 +64,40 @@ test_suite(model, loss_fn, optim, batch,
 with tab3:
     col1, col2 = st.columns(2)
     with col1:
-        st.write('''**Dataloaders:**
+        st.write('''### Tests for Dataloaders:
                     \n *Data leakage*
         ''')
-        st.code('')
-        st.write(''')
-                    \n - In-batch variance
-                    \n - Data ranges & invalid values
-                    \n - Data format''')
+        st.code(''' assert not (train_set == val_set)''')
+        st.write('''*In-batch variance:*''')
+        st.code(''' it = iter(train_loader)
+first = next(it)
+second = next(it)
+assert not (first == second)''')
+        st.write('''*Data ranges & invalid values*''')
+        st.code(''' assert not torch.sum(torch.isnan(my_tensor))).item() ''')
+        st.write('''*Data format*''')
+        st.code('''assert input.shape == (BATCH_SIZE, CHANNELS, WIDTH, HEIGHT)''')
+        st.write('''**Tests for models:** Weight updates,  output ranges, output format, overfitting for trivial cases (small batches, single example) ''')
     with col2:
-        st.write('''**Model:**
-                    \n - Weight updates
-                    \n - Output ranges
-                    \n - Output format
-                    \n - Overfitting for trivial cases (small batches, single example) ''')
+        st.write('''### Test structure''')
+        st.write('''*Don't* use a project dependent test structure!''')
+        st.code('''
+                 \n pyproject.toml
+src/
+    mypkg/
+        train_model.py
+tests/
+    test_train_model.py''')
+
+        st.write('''Set up a *project-independent* test suite...''')
+        st.code('''
+                 \n pyproject.toml
+src/
+    ml_test/
+        dataloader_checks.py
+        weight_checks.py
+        directional_expectation_checks.py''')
+        st.write('''... then import into project''')
+        st.code('''
+                from ml_test.weight_checks import assert_vars_change
+                ''')
