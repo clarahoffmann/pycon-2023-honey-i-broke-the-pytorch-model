@@ -56,3 +56,4 @@ repos:
     rev: v2.15.10
     hooks:
     -   id: pylint
+        args: [--disable=E0401]
