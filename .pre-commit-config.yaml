@@ -34,7 +34,10 @@ repos:
 -   repo: https://github.com/pre-commit/mirrors-isort
     rev: v5.4.2
     hooks:
-    -   id: isort
+    - id: isort
+      args:
+        - --profile
+        - black
 # automatically update to new style syntax
 -   repo: https://github.com/asottile/pyupgrade
     rev: v2.7.2
