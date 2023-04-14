@@ -20,6 +20,7 @@ repos:
     hooks:
     -   id: black
         args: [--line-length=79]
+        files: ^torch_examples/
 # Comment formatting in code
 -   repo: https://github.com/asottile/blacken-docs
     rev: v1.12.1
@@ -55,8 +56,10 @@ repos:
     rev: '3.8.3'
     hooks:
     -   id: flake8
+        files: ^torch_examples/
 -   repo: https://github.com/PyCQA/pylint
     rev: v2.15.10
     hooks:
     -   id: pylint
         args: [--disable=E0401]
+        files: ^torch_examples/
