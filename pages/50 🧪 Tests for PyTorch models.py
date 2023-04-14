@@ -4,7 +4,7 @@ from streamlit_extras.badges import badge
 
 st.markdown("# Tests & checks for PyTorch models")
 
-tab1, tab2, tab3, tab4= st.tabs(["Test philosophy", "📉 torchcheck", "Data Leakage tests", "Trivial overfitting tests"])
+tab1, tab2, tab3= st.tabs(["Test philosophy", "📉 torchcheck", "Ingredients of a sucessful ML test suite"])
 
 
 with tab1:
@@ -62,10 +62,19 @@ test_suite(model, loss_fn, optim, batch,
      ''')
 
 with tab3:
-    st.header('Data Leakage tests')
-    st.write('''Basic functionality to check whether variables are changing''')
-
-
-with tab4:
-    st.header('Data Leakage tests')
-    st.write('''Basic functionality to check whether variables are changing''')
+    col1, col2 = st.columns(2)
+    with col1:
+        st.write('''**Dataloaders:**
+                    \n *Data leakage*
+        ''')
+        st.code('')
+        st.write(''')
+                    \n - In-batch variance
+                    \n - Data ranges & invalid values
+                    \n - Data format''')
+    with col2:
+        st.write('''**Model:**
+                    \n - Weight updates
+                    \n - Output ranges
+                    \n - Output format
+                    \n - Overfitting for trivial cases (small batches, single example) ''')

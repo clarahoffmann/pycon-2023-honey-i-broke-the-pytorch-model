@@ -31,3 +31,10 @@ The presentation should now be available in a new browser tab
 
 ## 2. PyTorch examples
 All PyTorch code is contained in ```pages/torch_examples```
+
+
+## 3. Sources & further reading
+
+- [Jeremy Jordan's blogpost](https://www.jeremyjordan.me/testing-ml/) about testing philosophy for ML
+- Testing for PyTorch with [torchcheck](https://github.com/pengyan510/torcheck)
+- Deprecated, but interesting test suites for < TF2.0: [mltest](https://github.com/Thenerdstation/mltest) and for PyTorch: [torchtest](https://github.com/suriyadeepan/torchtest)

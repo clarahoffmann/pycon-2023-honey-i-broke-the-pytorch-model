@@ -14,8 +14,21 @@ from pages.torch_examples.data_generation import (
 
 st.markdown("# Synthetic data from scratch")
 
-tab1, tab2 = st.tabs(["Linear", "Nonlinear"])
+tab1, tab2, tab3 = st.tabs(["Synthetic Data", "Linear", "Nonlinear"])
+
 with tab1:
+     col1, col2 = st.columns(2)
+     with col1:
+          synth_vs_real_img = Image.open('pages/images/synthetic_vs_real_data.png')
+          st.image(synth_vs_real_img, width=400)
+
+     with col2:
+          st.subheader('Synthetic data for debugging')
+          st.write('''- We don't care about realistic looking data
+                    \n - Reduce our data to the *most basic learnable characteristics*
+                    \n - Want a model that is bug-free and cheap to train''')
+
+with tab2:
 
      tab1_sub, tab2_sub = st.tabs(["Data", "Model breakage"])
      with tab1_sub:
@@ -93,7 +106,7 @@ with tab1:
                     st.plotly_chart(fig_metrics, theme="streamlit", use_container_width=True)
 
 
-with tab2:
+with tab3:
 
      subtab_11, subtab_12 = st.tabs(["Data", "Model breakage"])
 

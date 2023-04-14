@@ -26,7 +26,7 @@ with col1:
 
     st.markdown(
         """**Find the slides here:**
-    \n 🔗 :blue[github.com/clarahoffmann/pycon_2023_honey_i_broke_the_pytorch_model-]"""
+    \n 🔗 :blue[github.com/clarahoffmann/pycon-2023-honey-i-broke-the-pytorch-model]"""
     )
     st.markdown(
         """**and more info about me here:**
