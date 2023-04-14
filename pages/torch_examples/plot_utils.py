@@ -1,6 +1,4 @@
 " Utilities for discrete variable creation"
-# pylint: disable=import-error
-
 from typing import List
 
 import jax.numpy as jnp
