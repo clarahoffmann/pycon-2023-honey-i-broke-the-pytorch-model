@@ -285,7 +285,8 @@ def train_model(train_loader: DataLoader,
                 freeze_bias: str = False, 
                 input_dim: int = 2, 
                 output_dim: int = 3,
-                weight_watcher: bool = False) -> None:
+                weight_watcher: bool = False, 
+                return_model: bool = False) -> None:
     
     logger.info('Define model and logger')
 
@@ -324,3 +325,6 @@ def train_model(train_loader: DataLoader,
     trainer = pl.Trainer(logger=csv_logger, max_epochs = EPOCHS, log_every_n_steps=LOG_EVERY_N_STEPS)
     trainer.fit(model=simple_dnn, train_dataloaders = train_loader, val_dataloaders = val_loader)
     logger.info('Training finished successfully')
+
+    if return_model:
+        return simple_dnn

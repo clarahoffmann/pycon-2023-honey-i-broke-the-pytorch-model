@@ -29,4 +29,5 @@ python run_ww.py --ckpt_path metrics_csv/circle_large_frozen_weights/version_0/c
 python train_models.py --save_dir_logger metrics_csv --name_logger circle_large_frozen_bias --output_file_name circle_large_frozen_bias --freeze_bias True --data_type nonlinear --weight_watcher True
 python run_ww.py --ckpt_path metrics_csv/circle_large_frozen_bias/version_0/checkpoints/epoch=49-step=650.ckpt  --output_file_path weightwatcher_metrics/circle_frozen_bias.csv
 
-
+# run cleanlab experiment
+python run_cleanlab.py --save_dir_logger metrics_csv --name_logger cleanlab --output_file_name cleanlab_data

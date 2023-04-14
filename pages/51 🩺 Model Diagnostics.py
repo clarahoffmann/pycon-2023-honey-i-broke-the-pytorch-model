@@ -131,18 +131,18 @@ predicted_labels = pred_probs.argmax(axis=1)''')
 with tab3:
     st.subheader('Label Analysis in Action')
         
-    df = pd.read_csv('pages/torch_examples/label_mixup/circles_uncorrupted.csv')
+    df = pd.read_csv('pages/torch_examples/metrics_csv/circles_uncorrupted.csv')
 
     cleanlab = False
     col1, col2, col3 = st.columns([1,2,5])
     with col1:
         if st.button('''Mix labels 🎲'''):
-            df = pd.read_csv('pages/torch_examples/label_mixup/circles_corrupted.csv')
+            df = pd.read_csv('pages/torch_examples/metrics_csv/circles_corrupted_test.csv')
     with col2: 
         if st.button('''🫧 Cleanlab prediction'''):
             cleanlab = True
-            df = pd.read_csv('pages/torch_examples/label_mixup/circles_corrupted.csv')
-            df_corrupted_pred = pd.read_csv('pages/torch_examples/label_mixup/circles_corrupted_cleanlab_pred.csv')
+            df = pd.read_csv('pages/torch_examples/metrics_csv/circles_corrupted_test.csv')  
+            df_corrupted_pred = pd.read_csv('pages/torch_examples/metrics_csv/circles_corrupted_cleanlab_pred.csv')
     
     col1, col2 = st.columns(2)
     with col1: 
@@ -181,7 +181,7 @@ with tab3:
     
     with col2:
         df = pd.read_csv('pages/torch_examples/reformatted_metrics/circles_cleanlab.csv')
-        df_corrupted = pd.read_csv('pages/torch_examples/reformatted_metrics/circles_cleanlab_corrupted.csv')
+        df_corrupted = pd.read_csv('pages/torch_examples/reformatted_metrics/cleanlab_data.csv') # circles_cleanlab_corrupted
 
         df_corrupted.loc[(df_corrupted.label == 'train_loss'),'label']='train loss (label mixup)'
         df_corrupted.loc[(df_corrupted.label == 'val_loss'),'label']='val loss (label mixup)'
