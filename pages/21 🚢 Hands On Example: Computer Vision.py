@@ -32,7 +32,7 @@ st.title('🚢 Walkthrough example: Harbor Activity')
 harbor_dir = "pages/images/ship_time_series.png"
 harbor_img = Image.open(harbor_dir)
 
-tab1, tab2 = st.tabs(['Use Case', 'Simple Implementation'])
+tab1, tab2 = st.tabs(['Use Case', 'Our own ship builder'])
 with tab1:
         st.subheader('Example case: Identify changes in harbor activity over time')
         st.image(harbor_img, caption='Changes in harbor activity over time')
