@@ -1,6 +1,6 @@
 # Honey, I broke the PyTorch model
 # 🍯😊⛏️🐍🔥🧮
-### Talk at PyCon.DE & PyData Berlin 2023
+# Talk at PyCon.DE & PyData Berlin 2023
 
 ![alt text](pages/images/pycon_pydata_logo.png)
 
