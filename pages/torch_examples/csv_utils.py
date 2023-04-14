@@ -1,3 +1,4 @@
+"""Reformat csv files written by CSV loggers during training"""
 import pandas as pd
 from pathlib import Path
 
