@@ -1,27 +1,21 @@
 """Pytorch models"""
-# pylint: disable=import-error
-from typing import Tuple
+# pylint: disable=import-error, too-many-locals, too-many-instance-attributes
+from typing import Tuple, Union
 
+import numpy as np
 import pytorch_lightning as pl
 import torch
 import torch.nn.functional as F
+from data_generation import MEANS, NUM_SAMPLES, VARIANCES, generate_mv_data
+from jax import random
 from loguru import logger
+from pytorch_lightning.loggers import CSVLogger
+from sklearn.datasets import make_circles
 from torch import nn
 from torch.utils.data import DataLoader, TensorDataset
 from torchmetrics import F1Score
 
-from loguru import logger
-from data_generation import MEANS, VARIANCES, KEY, generate_mv_data, NUM_SAMPLES
-from torch.utils.data import DataLoader
-import torch
-from torch.utils.data import TensorDataset
-import numpy as np
-import pytorch_lightning as pl
-from pytorch_lightning.loggers import CSVLogger
-import torch.nn.functional as F
-from typing import Tuple
-from sklearn.datasets import make_circles
-
+KEY = random.PRNGKey(0)
 BATCH_SIZE = 32
 EPOCHS = 200
 LOG_EVERY_N_STEPS = 20
@@ -52,7 +46,7 @@ def create_loaders(
     num_workers: int,
     shuffle_train: bool = True,
     shuffle_val: bool = False,
-    subset_broken_train: bool = False
+    subset_broken_train: bool = False,
 ) -> Tuple[DataLoader, DataLoader]:
     """
     Create dataloaders with desired train/validation split ratio
@@ -67,15 +61,17 @@ def create_loaders(
         data, [train_size, val_size]
     )
     if subset_broken_train:
-        train_set = TensorDataset(train_set[0][0][0].repeat(train_size).reshape(-1,2), 
-                                  train_set[1][0][0].repeat(train_size).reshape(-1, 2))
-    
-    train_loader = DataLoader(
-            train_set,
-            shuffle=shuffle_train,
-            batch_size=batch_size,
-            num_workers=num_workers,
+        train_set = TensorDataset(
+            train_set[0][0][0].repeat(train_size).reshape(-1, 2),
+            train_set[1][0][0].repeat(train_size).reshape(-1, 2),
         )
+
+    train_loader = DataLoader(
+        train_set,
+        shuffle=shuffle_train,
+        batch_size=batch_size,
+        num_workers=num_workers,
+    )
     val_loader = DataLoader(
         val_set,
         shuffle=shuffle_val,
@@ -179,20 +175,20 @@ class SimpleDnn(pl.LightningModule):
 
 class LargeEncoder(nn.Module):
     """
-    Simple encoder
+    Simple encoder with more layers to be used in weightwatcher example
     """
 
     def __init__(self, input_dim: int, output_dim: int) -> None:
         """Setup model layers"""
         super().__init__()
-        self.dense1 =  nn.Linear(input_dim, 10)
+        self.dense1 = nn.Linear(input_dim, 10)
         self.dense2 = nn.Linear(10, 10)
         self.dense3 = nn.Linear(10, 10)
         self.dense4 = nn.Linear(10, 10)
         self.dense5 = nn.Linear(10, 10)
         self.dense6 = nn.Linear(10, output_dim)
         self.relu = nn.ReLU()
-        
+
         self.output_dim = output_dim
         self.input_dim = input_dim
 
@@ -211,21 +207,22 @@ class LargeEncoder(nn.Module):
         x = self.dense6(x)
         return x
 
+
 class LargeLinearEncoder(nn.Module):
     """
-    Simple encoder
+    Simple encoder without nonlinear activation functions
     """
 
     def __init__(self, input_dim: int, output_dim: int) -> None:
         """Setup model layers"""
         super().__init__()
-        self.dense1 =  nn.Linear(input_dim, 10)
+        self.dense1 = nn.Linear(input_dim, 10)
         self.dense2 = nn.Linear(10, 10)
         self.dense3 = nn.Linear(10, 10)
         self.dense4 = nn.Linear(10, 10)
         self.dense5 = nn.Linear(10, 10)
         self.dense6 = nn.Linear(10, output_dim)
-        
+
         self.output_dim = output_dim
         self.input_dim = input_dim
 
@@ -240,91 +237,126 @@ class LargeLinearEncoder(nn.Module):
         return x
 
 
-def generate_linear_dataloaders() -> Tuple[DataLoader]:
-    # generate data
+def generate_linear_dataloaders() -> Tuple[DataLoader, DataLoader]:
+    """Generate lineary separable regression data"""
     data, labels = generate_mv_data(KEY, MEANS, VARIANCES, NUM_SAMPLES, 3)
 
-    # format labels and set up dataloaders
-    labels_one_hot = F.one_hot(torch.Tensor(np.hstack((np.array(labels)))).to(torch.int64), num_classes=3).float() 
+    labels_one_hot = F.one_hot(
+        torch.Tensor(np.hstack(np.array(labels))).to(torch.int64),
+        num_classes=3,
+    ).float()
     data_linear = TensorDataset(
-                    torch.Tensor(np.vstack((np.array(data)))), labels_one_hot
-                )
-    train_loader_linear, val_loader_linear = create_loaders(data = data_linear, 
-                                                            ratio = 0.8, 
-                                                            num_workers = 0, 
-                                                            shuffle_train = True, 
-                                                            shuffle_val = False, 
-                                                            batch_size = 32)
+        torch.Tensor(np.vstack(np.array(data))), labels_one_hot
+    )
+    train_loader_linear, val_loader_linear = create_loaders(
+        data=data_linear,
+        ratio=0.8,
+        num_workers=0,
+        shuffle_train=True,
+        shuffle_val=False,
+        batch_size=32,
+    )
 
     return train_loader_linear, val_loader_linear
 
-def generate_nonlinear_dataloaders(break_loader: bool = False) -> Tuple[DataLoader]:
-    data_circles, label_circles = make_circles(n_samples=NUM_SAMPLES, factor=0.5, noise=0.05)
+
+def generate_nonlinear_dataloaders(
+    break_loader: bool = False,
+) -> Tuple[DataLoader, DataLoader]:
+    """Generate train and validation loaders for nonlinear regression data"""
+    data_circles, label_circles = make_circles(
+        n_samples=NUM_SAMPLES, factor=0.5, noise=0.05
+    )
     # concentric circles
     data_tensor_circles = TensorDataset(
-                    torch.Tensor(data_circles), F.one_hot(torch.Tensor(label_circles).to(torch.int64), num_classes=2).float() 
-                )
-    print(break_loader)
-    train_loader_circles, val_loader_circles = create_loaders(data = data_tensor_circles, 
-                                                              ratio = 0.8,  
-                                                              batch_size = 32, 
-                                                              num_workers = 0,
-                                                              shuffle_train = True, 
-                                                              shuffle_val = False, 
-                                                              subset_broken_train = break_loader)
+        torch.Tensor(data_circles),
+        F.one_hot(
+            torch.Tensor(label_circles).to(torch.int64), num_classes=2
+        ).float(),
+    )
+    train_loader_circles, val_loader_circles = create_loaders(
+        data=data_tensor_circles,
+        ratio=0.8,
+        batch_size=32,
+        num_workers=0,
+        shuffle_train=True,
+        shuffle_val=False,
+        subset_broken_train=break_loader,
+    )
 
     return train_loader_circles, val_loader_circles
 
 
-def train_model(train_loader: DataLoader, 
-                val_loader: DataLoader, 
-                save_dir_logger: str = 'metrics_csv', 
-                name_logger: str = 'linear', 
-                break_activations: str = False, 
-                freeze_weights: str = False, 
-                freeze_bias: str = False, 
-                input_dim: int = 2, 
-                output_dim: int = 3,
-                weight_watcher: bool = False, 
-                return_model: bool = False) -> None:
-    
-    logger.info('Define model and logger')
+def train_model(
+    train_loader: DataLoader,
+    val_loader: DataLoader,
+    save_dir_logger: str = "metrics_csv",
+    name_logger: str = "linear",
+    break_activations: bool = False,
+    freeze_weights: bool = False,
+    freeze_bias: bool = False,
+    input_dim: int = 2,
+    output_dim: int = 3,
+    weight_watcher: bool = False,
+    return_model: bool = False,
+) -> Union[pl.LightningModule, None]:
+
+    """Train PyTorch models with different breakage options"""
+
+    logger.info("Define model and logger")
 
     if not weight_watcher:
-        simple_dnn = SimpleDnn(Encoder(input_dim = input_dim, output_dim = output_dim), task_type = 'classification')
+        simple_dnn = SimpleDnn(
+            Encoder(input_dim=input_dim, output_dim=output_dim),
+            task_type="classification",
+        )
     else:
-        simple_dnn = SimpleDnn(LargeEncoder(input_dim = input_dim, output_dim = output_dim), task_type = 'classification')
+        simple_dnn = SimpleDnn(
+            LargeEncoder(input_dim=input_dim, output_dim=output_dim),
+            task_type="classification",
+        )
 
     if break_activations:
-        logger.info('CAUTION: training with linear activation functions')
+        logger.info("CAUTION: training with linear activation functions")
         if not weight_watcher:
-            simple_dnn = SimpleDnn(Linear_Encoder(input_dim = input_dim, 
-                                                output_dim = output_dim), 
-                                task_type = 'classification')
+            simple_dnn = SimpleDnn(
+                Linear_Encoder(input_dim=input_dim, output_dim=output_dim),
+                task_type="classification",
+            )
         else:
-            simple_dnn = SimpleDnn(LargeLinearEncoder(input_dim = input_dim, 
-                                                output_dim = output_dim), 
-                                task_type = 'classification')
+            simple_dnn = SimpleDnn(
+                LargeLinearEncoder(input_dim=input_dim, output_dim=output_dim),
+                task_type="classification",
+            )
     elif freeze_weights:
-        num_params = len([param for param in simple_dnn.parameters()])
+        num_params = len(list(simple_dnn.parameters()))
         for i, param in zip(range(num_params), simple_dnn.parameters()):
-            if i in [num_params-1, num_params -2] :
+            if i in [num_params - 1, num_params - 2]:
                 param.requires_grad = False
-    
-    elif freeze_bias:
-        num_params = len([param for param in simple_dnn.parameters()])
-        for i, param in zip(range(num_params), simple_dnn.parameters()):
-            if i == num_params-1 :
-                param.requires_grad = False
-    
-    csv_logger = CSVLogger(save_dir=save_dir_logger, name = name_logger)
 
-    logger.info(f'Saving logs to {save_dir_logger}/{name_logger}')
-    
-    logger.info('Start model training')
-    trainer = pl.Trainer(logger=csv_logger, max_epochs = EPOCHS, log_every_n_steps=LOG_EVERY_N_STEPS)
-    trainer.fit(model=simple_dnn, train_dataloaders = train_loader, val_dataloaders = val_loader)
-    logger.info('Training finished successfully')
+    elif freeze_bias:
+        num_params = len(list(simple_dnn.parameters()))
+        for i, param in zip(range(num_params), simple_dnn.parameters()):
+            if i == num_params - 1:
+                param.requires_grad = False
+
+    csv_logger = CSVLogger(save_dir=save_dir_logger, name=name_logger)
+
+    logger.info(f"Saving logs to {save_dir_logger}/{name_logger}")
+
+    logger.info("Start model training")
+    trainer = pl.Trainer(
+        logger=csv_logger,
+        max_epochs=EPOCHS,
+        log_every_n_steps=LOG_EVERY_N_STEPS,
+    )
+    trainer.fit(
+        model=simple_dnn,
+        train_dataloaders=train_loader,
+        val_dataloaders=val_loader,
+    )
+    logger.info("Training finished successfully")
 
     if return_model:
         return simple_dnn
+    return None
