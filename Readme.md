@@ -35,12 +35,17 @@ All PyTorch code is contained in ```pages/torch_examples```
 
 ## 3. Sources & further reading
 
+### Testing in ML
 - [Jeremy Jordan's blogpost](https://www.jeremyjordan.me/testing-ml/) about testing philosophy for ML
 - Testing for PyTorch with [torchcheck](https://github.com/pengyan510/torcheck)
 - Deprecated, but interesting test suites for < TF2.0: [mltest](https://github.com/Thenerdstation/mltest) and for PyTorch: [torchtest](https://github.com/suriyadeepan/torchtest)
+- [Differences between Software Engineering and Machine Learning Engineering workflows](https://www.youtube.com/watch?v=7SdrrHpu8_o&t=440s) at TensorFlow explained by TF team lead
+
+### Post-training checks
 - Weight analysis without training or validation data: [weightwatcher](https://github.com/CalculatedContent/WeightWatcher)
 - Post-training label quality analysis: [cleanlab](https://github.com/cleanlab/cleanlab)
 - [Behavioral testing for NLP models](https://aclanthology.org/2020.acl-main.442/)
+
+### For other bugs and better performance
 - Andrej Kaparthy's [recipe for training NNs](http://karpathy.github.io/2019/04/25/recipe/)
 - and if you're done debugging check out Google's [Deep Learning tuning playbook](https://github.com/google-research/tuning_playbook)
-- [Differences between Software Engineering and Machine Learning Engineering workflows](https://www.youtube.com/watch?v=7SdrrHpu8_o&t=440s) at TensorFlow explained by TF team lead
