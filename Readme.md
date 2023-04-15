@@ -41,3 +41,5 @@ All PyTorch code is contained in ```pages/torch_examples```
 - Weight analysis without training or validation data: [weightwatcher](https://github.com/CalculatedContent/WeightWatcher)
 - Post-training label quality analysis: [cleanlab](https://github.com/cleanlab/cleanlab)
 - [Behavioral testing for NLP models](https://aclanthology.org/2020.acl-main.442/)
+- Andrej Kaparthy's [recipe for training NNs](http://karpathy.github.io/2019/04/25/recipe/)
+- and if you're done debugging check out Google's [Deep Learning tuning playbook](https://github.com/google-research/tuning_playbook)

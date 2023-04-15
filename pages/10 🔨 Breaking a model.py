@@ -141,20 +141,14 @@ with tab3:
     with col1:
         st.subheader('Why is debugging DL models hard?')
         st.write('''#
-                    \n - **🐞 Bug identification**: Difficult to *identify breaking points* when several components are broken
-                    \n - **⏰💸 Time & cost factor**: Several training runs are expensive and time-consuming
-                    \n - **🚧 Software Engineering based tests not helpful in-dev**: Go against *fail fast, fail early* nature of ML development process
+                    \n - 🐞 Bug entanglement
+                    \n - ⏰💸 Time & cost factor
+                    \n - 🚧 Software Engineering based tests not helpful for ML development
                     '''
                     )
-        st.subheader('How can we speed up the debugging process?')
-        st.write('''
-                    \n - **➿ Redundancy of bugs**: Some typical bugs occur over and over again - just at different locations
-                    \n - **🗃️ Overcome the black-box paradigm**: Much more information than metrics are available from networks - but often unused
-                    \n - **✨ Isolate components**: Create some components that we know to be flawless
-                ''')
 
     with col2:
-        st.subheader('Entangled Bugs 🐞')
+        st.subheader('')
         image_directory = "pages/images/spiderman_bugs.jpeg"
         image = Image.open(image_directory)
         st.image(image)

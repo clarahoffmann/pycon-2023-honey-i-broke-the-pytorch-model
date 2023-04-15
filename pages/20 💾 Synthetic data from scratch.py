@@ -33,8 +33,8 @@ with tab1:
           st.write(''' # ''')
           st.write(''' # ''')
           st.subheader('How can we create it?')
-          st.write('''\n - Which minimum requirements must be fulfilled for our data?
-                      \n - How simple can we make our data without losing the ability to learn?''')
+          st.write('''\n - Which *minimum requirements* must be fulfilled for our data?
+                      \n - How *simple* can we make our data without losing the ability to learn?''')
 
 
 with tab2:

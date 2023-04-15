@@ -17,12 +17,21 @@ with col1:
     st.image(img_gen_img, width = 250)
 
 with col2:
-    st.write('''### 2. Pre-train tests & checks''')
+    st.write('''### 2. Pre-train tests''')
     st.write('''*Can be as easy as one function call*''')
-    st.code('''from ml_test import test_suite
+    st.code('''from ml_test import test_model, test_loader
 
+# test model
 model = MyFavoriteTransformer()
-test_suite(model)''')
+test_model(model)
+
+# test dataloader
+train_loader = create_loaders()
+test_loader(train_loader)
+
+# start training
+model.train(train_loader)
+''')
 
 with col3:
     st.write('''### 3. Post-train checks''')

@@ -21,14 +21,12 @@ with tab1:
 with tab2:
     col1, col2 = st.columns(2)
     with col1:
-        st.subheader('Input/Output Ranges & Weight Updates')
-        st.write('''Check for:
-            \n - Output range of final layers, Input range of first layers, Loss functions, Invalid values
-
-            \n - Correct weight updates ''')
+        st.subheader('📦 torchcheck')
+        st.write('''**Pre-train** checks for:
+            \n - Output ranges,  Invalid values, variable updates''')
 
 
-        st.subheader('''**Example**: torchcheck''')
+        st.subheader('''**Example**:''')
         badge(type="pypi", name="torchtest", url="https://pypi.org/project/torchtest/")
         st.code('''from torchtest import assert_vars_change ''')
         st.write('''**1. Setup data and model**''')
@@ -65,22 +63,22 @@ with tab3:
     col1, col2 = st.columns(2)
     with col1:
         st.write('''### 💾 Tests for Dataloaders:
-                    \n *Data leakage*
+                    \n ***1. Data leakage***
         ''')
         st.code(''' assert not (train_set == val_set)''')
-        st.write('''*In-batch variance:*''')
+        st.write('''***2. In-batch variance:***''')
         st.code(''' it = iter(train_loader)
 first = next(it)
 second = next(it)
 assert not (first == second)''')
-        st.write('''*Data ranges & invalid values*''')
+        st.write('''***3. Data ranges & invalid values***''')
         st.code(''' assert not torch.sum(torch.isnan(my_tensor))).item() ''')
-        st.write('''*Data format*''')
+        st.write('''***4. Data format***''')
         st.code('''assert input.shape == (BATCH_SIZE, CHANNELS, WIDTH, HEIGHT)''')
         st.write('''**🧮 Tests for models:** Weight updates,  output ranges, output format, overfitting for trivial cases (small batches, single example) ''')
     with col2:
         st.write('''### 📁 Test structure''')
-        st.write('''*Don't* use a project dependent test structure!''')
+        st.write('''***Don't*** use a project dependent test structure!''')
         st.code('''
                  \n pyproject.toml
 src/
@@ -89,7 +87,7 @@ src/
 tests/
     test_train_model.py''')
 
-        st.write('''Set up a *project-independent* test suite...''')
+        st.write('''Set up a ***project-independent*** test suite...''')
         st.code('''
                  \n pyproject.toml
 src/
@@ -97,7 +95,7 @@ src/
         dataloader_checks.py
         weight_checks.py
         directional_expectation_checks.py''')
-        st.write('''... then import into *specific ML project*''')
+        st.write('''... then import into ***specific ML project***''')
         st.code('''
                 from ml_test.weight_checks import assert_vars_change
                 ''')
