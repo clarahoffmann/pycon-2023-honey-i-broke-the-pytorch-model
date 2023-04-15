@@ -32,6 +32,10 @@ with col1:
         """**and more info about me here:**
     \n 🔗 :blue[clarahoffmann.github.io/clarahoffmann/about/]"""
     )
+    st.markdown(
+        """**Twitter::**
+    \n 🔗 :blue[ClaraHoffmann16]"""
+    )
 
 
 with col2:
