@@ -43,3 +43,4 @@ All PyTorch code is contained in ```pages/torch_examples```
 - [Behavioral testing for NLP models](https://aclanthology.org/2020.acl-main.442/)
 - Andrej Kaparthy's [recipe for training NNs](http://karpathy.github.io/2019/04/25/recipe/)
 - and if you're done debugging check out Google's [Deep Learning tuning playbook](https://github.com/google-research/tuning_playbook)
+- [Differences between Software Engineering and Machine Learning Engineering workflows](https://www.youtube.com/watch?v=7SdrrHpu8_o&t=440s) at TensorFlow explained by TF team lead
