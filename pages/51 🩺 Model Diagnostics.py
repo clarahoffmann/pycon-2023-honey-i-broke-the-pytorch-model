@@ -22,12 +22,12 @@ st.markdown("# Standalone diagnostics 🩺")
 tab1, tab2, tab3 = st.tabs(["Weight analysis", "Label analysis", "Label analysis in action"])
 
 with tab1:
-    st.subheader('🎯 Predictive accuracy without training or validation data')
-
+    st.subheader('📦 **WeightWatcher**: 🎯 Predictive accuracy without training or validation data')
     col1, col2, col3 = st.columns([5,2,5])
 
     with col1:
-        st.write('''#### 📦 **WeightWatcher**''')
+
+        badge(type="pypi", name="weightwatcher", url="https://pypi.org/project/weightwatcher/")
         #with col2:
         #    badge(type='github', name='CalculatedContent/WeightWatcher')
         #ww_logo = Image.open('pages/images/ww_logo.jpeg')
@@ -92,6 +92,7 @@ with tab2:
         #cleanlab_logo = Image.open('pages/images/cleanlab_logo.png')
         #st.image(cleanlab_logo, width=200)
         st.subheader('''Cleanlab''')
+        badge(type="pypi", name="cleanlab", url="https://pypi.org/project/cleanlab/")
 
         st.write('''Identify *curable* data issues based on a *trained* classifier
                     \n - *Mislabeled examples* based on class scores
@@ -107,7 +108,6 @@ with tab2:
         st.write('**1. Reformat *trained* PyTorch model to sklearn object**')
         st.code('''
         model_skorch = NeuralNetClassifier(simple_dnn.encoder)
-cl = cleanlab.classification.CleanLearning(model_skorch)
     ''')
         st.write('**2. Prediction with cross validation**')
         st.code('''
@@ -117,8 +117,7 @@ cl = cleanlab.classification.CleanLearning(model_skorch)
                         label_circles,
                         cv=3,
                         method="predict_proba",
-                    )
-predicted_labels = pred_probs.argmax(axis=1)''')
+                    )''')
         st.write('**3. Rank label issues**')
         st.code('''
                   ranked_label_issues = find_label_issues(
@@ -129,7 +128,7 @@ predicted_labels = pred_probs.argmax(axis=1)''')
 
 
 with tab3:
-    st.subheader('Label Analysis in Action')
+    st.subheader('Label analysis in action')
 
     df = pd.read_csv('pages/torch_examples/metrics_csv/circles_uncorrupted.csv')
 

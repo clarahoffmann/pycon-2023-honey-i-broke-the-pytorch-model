@@ -12,7 +12,7 @@ with tab1:
         col1, col2, col3 = st.columns([5,1, 6])
 
         with col1:
-            st.subheader('Standard Setup for PyTorch models')
+            st.subheader('Standard setup for PyTorch models')
             image_directory = "pages/images/pipeline_components.png"
             image = Image.open(image_directory)
             st.image(image, caption='Typical PyTorch model components')
@@ -141,9 +141,9 @@ with tab3:
     with col1:
         st.subheader('Why is debugging DL models hard?')
         st.write('''#
-                    \n - 🐞 Bug entanglement
-                    \n - ⏰💸 Time & cost factor
-                    \n - 🚧 Software Engineering based tests not helpful for ML development
+                    \n - ### 🐞 Bug entanglement
+                    \n - ### ⏰💸 Time & cost factor
+                    \n - ### 🚧 Software Engineering based tests not helpful for ML development
                     '''
                     )
 
@@ -158,18 +158,19 @@ with tab4:
     col1, col2, col3 = st.columns([1,1,1.2])
     with col1:
         st.write('''# \n # \n # 💾 ''')
-        st.header('Data component')
-        st.write('''### 🩹 *:green[ simple,synthetic]* \n ### *:green[ training data]*
+        st.subheader('Data component')
+        st.write('''### 🩹 *:green[ simple, synthetic]* \n ### *:green[ training data]*
                  ''')
 
     with col2:
         st.write('''# \n # \n # 🧮''')
-        st.header('Model component')
+        st.subheader('Model component')
+
         st.write('''### 🩹 *:green[ project-transferable]* \n ### *:green[pre-train tests]*
                  ''')
 
     with col3:
         st.write('''# \n # \n # 🖇️''')
-        st.header('Data & Model interplay')
+        st.subheader('Data & model interplay')
         st.write('''###  🩹 *:green[ project-transferable]* \n ### *:green[post-train tests]*
                  ''')

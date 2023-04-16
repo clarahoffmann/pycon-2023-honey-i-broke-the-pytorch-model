@@ -27,9 +27,9 @@ with tab1:
      with col2:
           st.write(''' # ''')
           st.header('😍 Debuggers love this image!')
-          st.write('''- We don't care about realistic looking data
-                    \n - Reduce our data to the *most basic learnable characteristics*
-                    \n - Want a model that is *bug-free* and *cheap to train*''')
+          st.write('''- We ***don't care*** about realistic looking data
+                    \n - Reduce our data to the ***most basic learnable characteristics***
+                    \n - Want a model that is ***bug-free*** and ***cheap to train***''')
           st.write(''' # ''')
           st.write(''' # ''')
           st.subheader(' Ask yourself:')
@@ -132,7 +132,7 @@ make_circles(n_samples=NUM_SAMPLES, factor=0.5, noise=0.05)
 
                st.write('''
                     Some combination of nonlinear functions will also do the job
-                    \n $y = \\sin(x_1) + \\cos(x_2) + \\epsilon,$
+                    \n $y = 0.1\\sin(x_1) -0.7\\cos(x_2) + \\epsilon,$
                     \n $\\epsilon \\sim \\mathcal{N}(0,1)$
                     ''')
 

@@ -4,12 +4,12 @@ from streamlit_extras.badges import badge
 
 st.markdown("# Tests & checks for PyTorch models")
 
-tab1, tab2, tab3, tab4= st.tabs(["🦉 Test philosophy", "📉 torchcheck", "😋 Ingredients of a successful ML test suite", "Our status"])
+tab1, tab2, tab3, tab4= st.tabs(["🦉 Test philosophy", "📉 torchtest", "😋 Ingredients of a successful ML test suite", "Our status"])
 
 
 with tab1:
 
-    st.write(''' ***Classic Software Engineering testing workflows can be harmful in ML development process!***''')
+    st.write(''' ### Classic Software Engineering testing workflows can be harmful in ML development processes!''')
     col1, col2, col3 = st.columns([9,1,9])
     with col1:
         se_vs_ml = Image.open('pages/images/software_vs_ml_eng.png')
@@ -21,13 +21,14 @@ with tab1:
 with tab2:
     col1, col2 = st.columns(2)
     with col1:
-        st.subheader('📦 torchcheck')
+        st.subheader('📦 torchtest')
+        badge(type="pypi", name="torchtest", url="https://pypi.org/project/torchtest/")
         st.write('''**Pre-train** checks for:
-            \n - Output ranges,  invalid values, variable updates''')
+            \n - Output ranges,  invalid values, variable updates
+            \n - Also check out the torchcheck package!''')
 
 
         st.subheader('''**Example**:''')
-        badge(type="pypi", name="torchtest", url="https://pypi.org/project/torchtest/")
         st.code('''from torchtest import assert_vars_change ''')
         st.write('''**1. Setup data and model**''')
         st.code('''
