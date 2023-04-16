@@ -38,9 +38,9 @@ with col3:
     st.write('''*Deliver metrics that are robust to data issues*''')
     st.image(cleanlab_img, width = 350)
 
-st.write('''# \n # \n # \n # \n # \n # \n ''')
+st.write('''# \n # \n # \n # ''')
 
-st.markdown(
-        """**Check out the repository for sources and additional information:**
-    \n 🔗 :blue[github.com/clarahoffmann/pycon-2023-honey-i-broke-the-pytorch-model]"""
-    )
+st.subheader(
+        """Slides on Github: 🔗 :blue[github.com/clarahoffmann]""")
+st.subheader(
+        """Twitter: 🔗 :blue[ClaraHoffmann16]""")

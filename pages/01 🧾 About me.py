@@ -22,21 +22,22 @@ with col1:
                    \n - *Computer Vision applications with SAR data*"""
     )
 
-    st.write("""#""")
+    st.write("""# \n ##""")
 
-    st.markdown(
-        """**Find the slides here:**
-    \n 🔗 :blue[github.com/clarahoffmann/pycon-2023-honey-i-broke-the-pytorch-model]"""
+    st.subheader(
+        """**Find the slides here:** """)
+    st.subheader("""
+    🔗 :blue[github.com/clarahoffmann/pycon-2023-honey-i-broke-the-pytorch-model]"""
     )
-    st.markdown(
-        """**and more info about me here:**
-    \n 🔗 :blue[clarahoffmann.github.io/clarahoffmann/about/]"""
-    )
-    st.markdown(
-        """**Twitter::**
-    \n 🔗 :blue[ClaraHoffmann16]"""
-    )
+
 
 
 with col2:
     st.image(img, use_column_width=True)
+
+    st.write('# \n #')
+    st.subheader("""Website: 🔗 :blue[clarahoffmann.github.io/clarahoffmann/about/]"""
+    )
+    st.subheader(
+        """**Twitter:** 🔗 :blue[ClaraHoffmann16] """
+    )

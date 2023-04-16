@@ -155,27 +155,21 @@ with tab3:
 
 with tab4:
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns([1,1,1.2])
     with col1:
-        st.write('''# 💾''')
-        st.subheader('Data component')
-        st.write('''- Create synthetic training and validation data
-                 \n- Check data redundancy & leakage
-                 \n- Check label correctness
+        st.write('''# \n # \n # 💾 ''')
+        st.header('Data component')
+        st.write('''### 🩹 *:green[ simple,synthetic]* \n ### *:green[ training data]*
                  ''')
 
     with col2:
-        st.write('''# 🧮''')
-        st.subheader('Model component')
-        st.write('''- Check updates for weights and biases
-                 \n- Check input/output ranges
-                 \n - Check overfitting on trivial cases
+        st.write('''# \n # \n # 🧮''')
+        st.header('Model component')
+        st.write('''### 🩹 *:green[ project-transferable]* \n ### *:green[pre-train tests]*
                  ''')
 
     with col3:
-        st.write('''# 🖇️''')
-        st.subheader('Data & Model interplay')
-        st.write('''- Check adequacy of learned weight structure
-                 \n- Check for mislabeled examples
-                 \n - Check for expected behavior
+        st.write('''# \n # \n # 🖇️''')
+        st.header('Data & Model interplay')
+        st.write('''###  🩹 *:green[ project-transferable]* \n ### *:green[post-train tests]*
                  ''')

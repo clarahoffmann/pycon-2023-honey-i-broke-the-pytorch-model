@@ -1,8 +1,8 @@
-import streamlit as st
-from PIL import Image
+import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-import pandas as pd
+import streamlit as st
+from PIL import Image
 from streamlit_extras.badges import badge
 
 m = st.markdown("""
@@ -22,11 +22,11 @@ st.markdown("# Standalone diagnostics 🩺")
 tab1, tab2, tab3 = st.tabs(["Weight analysis", "Label analysis", "Label analysis in action"])
 
 with tab1:
-    st.subheader('🎯 Predictive accuracy without training or validation data') 
-    
+    st.subheader('🎯 Predictive accuracy without training or validation data')
+
     col1, col2, col3 = st.columns([5,2,5])
-    
-    with col1: 
+
+    with col1:
         st.write('''#### 📦 **WeightWatcher**''')
         #with col2:
         #    badge(type='github', name='CalculatedContent/WeightWatcher')
@@ -35,16 +35,16 @@ with tab1:
 
         st.write(''' - Analyze quality of weights without training or validation data.
                     \n - Histogram of *eigenvalues* of the weight correlation matrix $X = W^TW$.
-                    \n - Well trained layers should have a tail that can be described with a Power law with exponent.''')
+                    \n - Well trained layers should have a tail that can be described with a power law with exponent.''')
         st.latex(r''' \alpha \approx 2 ''')
-        st.write('''- High values of indicate that a layer is *not well trained*.''')
+        st.write('''- High values of alpha indicate that a layer is *not well trained*.''')
         st.write(''' *Source: Implicit Self-Regularization in Deep Neural Networks: Evidence from Random Matrix Theory and Implications for Learning, JMLR (2021)*''')
         st.write('''🔗 https://github.com/CalculatedContent/WeightWatcher''')
 
         df = pd.read_csv('pages/torch_examples/weightwatcher_metrics/circle.csv')
         df['label'] = ['no breakage']*len(df)
 
-    with col2: 
+    with col2:
             st.write('#')
             st.write('#')
             st.write('#')
@@ -52,7 +52,7 @@ with tab1:
                 df_add = pd.read_csv('pages/torch_examples/weightwatcher_metrics/circle_no_relu.csv')
                 df_add['label'] = ['no relu']*len(df)
                 df = pd.concat([df,df_add])
-            
+
             if st.button('Dataloader broken'):
                 df_add = pd.read_csv('pages/torch_examples/weightwatcher_metrics/circle_dataloader_broken.csv')
                 df_add['label'] = ['broken dataloader']*len(df)
@@ -67,7 +67,7 @@ with tab1:
                 df_add = pd.read_csv('pages/torch_examples/weightwatcher_metrics/circle_frozen_bias.csv')
                 df_add['label'] = ['frozen bias']*len(df)
                 df = pd.concat([df,df_add])
-    
+
     with col3:
             fig_metrics = px.histogram(
                                 df,
@@ -86,13 +86,13 @@ with tab1:
 
 
 with tab2:
-    st.subheader('🏷️ Identifying wrong labels') 
+    st.subheader('🏷️ Identifying wrong labels')
     col1, col2 = st.columns(2)
     with col1:
         #cleanlab_logo = Image.open('pages/images/cleanlab_logo.png')
         #st.image(cleanlab_logo, width=200)
         st.subheader('''Cleanlab''')
-        
+
         st.write('''Identify *curable* data issues based on a *trained* classifier
                     \n - *Mislabeled examples* based on class scores
                     \n - Consensus with *multiple annotators*
@@ -120,17 +120,17 @@ cl = cleanlab.classification.CleanLearning(model_skorch)
                     )
 predicted_labels = pred_probs.argmax(axis=1)''')
         st.write('**3. Rank label issues**')
-        st.code('''       
+        st.code('''
                   ranked_label_issues = find_label_issues(
                   label_circles,
                   pred_probs,
                   return_indices_ranked_by="self_confidence",
             )''')
-    
-    
+
+
 with tab3:
     st.subheader('Label Analysis in Action')
-        
+
     df = pd.read_csv('pages/torch_examples/metrics_csv/circles_uncorrupted.csv')
 
     cleanlab = False
@@ -138,14 +138,14 @@ with tab3:
     with col1:
         if st.button('''Mix labels 🎲'''):
             df = pd.read_csv('pages/torch_examples/metrics_csv/circles_corrupted_test.csv')
-    with col2: 
+    with col2:
         if st.button('''🫧 Cleanlab prediction'''):
             cleanlab = True
-            df = pd.read_csv('pages/torch_examples/metrics_csv/circles_corrupted_test.csv')  
+            df = pd.read_csv('pages/torch_examples/metrics_csv/circles_corrupted_test.csv')
             df_corrupted_pred = pd.read_csv('pages/torch_examples/metrics_csv/circles_corrupted_cleanlab_pred.csv')
-    
+
     col1, col2 = st.columns(2)
-    with col1: 
+    with col1:
         fig_circles = px.scatter(
                     df,
                     x='x1',
@@ -156,7 +156,7 @@ with tab3:
                     opacity = 0.3,
                     title='(Un-)Corrupted Data'
                     )
-        
+
         if cleanlab:
             fig_circles.add_trace(go.Scatter(
                 x=df_corrupted_pred['x1'],
@@ -178,7 +178,7 @@ with tab3:
                                     x=0.01
                                 ))
         st.plotly_chart(fig_circles, theme="streamlit", use_container_width=True)
-    
+
     with col2:
         df = pd.read_csv('pages/torch_examples/reformatted_metrics/circles_cleanlab.csv')
         df_corrupted = pd.read_csv('pages/torch_examples/reformatted_metrics/cleanlab_data.csv') # circles_cleanlab_corrupted
@@ -194,6 +194,6 @@ with tab3:
                 color='label',
                 title='Loss',
                 )
-        
+
         fig_loss.update_coloraxes(showscale=False)
         st.plotly_chart(fig_loss, theme="streamlit", use_container_width=True)

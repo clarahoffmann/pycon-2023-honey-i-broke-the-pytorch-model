@@ -26,15 +26,14 @@ with tab1:
 
      with col2:
           st.write(''' # ''')
-          st.subheader('Synthetic data for debugging')
+          st.header('😍 Debuggers love this image!')
           st.write('''- We don't care about realistic looking data
                     \n - Reduce our data to the *most basic learnable characteristics*
                     \n - Want a model that is *bug-free* and *cheap to train*''')
           st.write(''' # ''')
           st.write(''' # ''')
-          st.subheader('How can we create it?')
-          st.write('''\n - Which *minimum requirements* must be fulfilled for our data?
-                      \n - How *simple* can we make our data without losing the ability to learn?''')
+          st.subheader(' Ask yourself:')
+          st.subheader('  *:teal[ 🎨 How would a minimalist artist depict my data?]*')
 
 
 with tab2:

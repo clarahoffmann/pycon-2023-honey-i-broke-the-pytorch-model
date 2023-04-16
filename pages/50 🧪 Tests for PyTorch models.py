@@ -23,7 +23,7 @@ with tab2:
     with col1:
         st.subheader('📦 torchcheck')
         st.write('''**Pre-train** checks for:
-            \n - Output ranges,  Invalid values, variable updates''')
+            \n - Output ranges,  invalid values, variable updates''')
 
 
         st.subheader('''**Example**:''')
